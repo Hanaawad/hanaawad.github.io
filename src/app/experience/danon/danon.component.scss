@@ -1,0 +1,203 @@
+.banner {
+    background-size: cover;
+    background-position: center;
+    height: 71vh;
+    @media only screen and (max-width: 768px) {
+        height: 26vh;
+    }
+}
+.showcase {
+    display: block;
+    justify-content: center;
+    img{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 2vw;
+        width: 100%;
+    }
+}
+.main-summary{
+    background: #f7f9fa;
+}
+.project-goal{
+    background: white !important ;
+}
+.memorix-wireframe{
+    height: 20vw;
+    background-size: cover;
+    background-position: center;
+}
+
+.flow{
+    display: grid;
+    grid-template-columns: 34.6vw 64vw;
+    .container{
+        section{
+            padding-top: auto;
+        }
+    }
+    p{
+        font-size: 1.25vw;
+    }
+    img{
+        width: 100%;
+    }
+    ul.numbered-list {
+        text-align: justify;
+        @media only screen and (max-width: 768px) {
+            font-size: 3vw;
+            width: 83vw;    
+        }
+        
+    }
+    @media only screen and (max-width: 768px) {
+    display: block;
+    }
+}
+.insights{
+    display: grid;
+    .container{
+        section{
+            padding-top: auto;
+        }
+    }
+    p{
+        font-size: 1.25vw;
+    }
+    img{
+        width: 100%;
+    }
+    ul.numbered-list {
+        text-align: justify;
+    }
+}
+.wireframe{
+    display: grid;
+    grid-template-columns: 64vw 34.6vw;
+    .container{
+        background-color: #F7F9FA;
+        section{
+            padding-top: auto;
+        }
+        
+    }
+    p{
+        font-size: 1.25vw;
+    }
+    img{
+        width: 100%;
+    }
+    ul.numbered-list {
+        text-align: justify;
+        @media only screen and (max-width: 768px) {
+            font-size: 3vw;
+            width: 83vw;    
+        }
+    }
+    @media only screen and (max-width: 768px) {
+        display: block;
+    }
+}
+
+.sketching{
+    display: grid;
+    grid-template-columns: 64vw 34.6vw;
+    .container{
+        background-color: #F7F9FA;
+        section{
+            padding-top: auto;
+        }
+        
+    }
+    p{
+        font-size: 1.25vw;
+    }
+    img{
+        width: 100%;
+    }
+    ul.numbered-list {
+        text-align: justify;
+    }
+    @media only screen and (max-width: 768px) {
+        display: block;
+    }
+}
+
+.next-project{
+    display: grid;
+    justify-content: center;
+    p{
+        text-align: center;
+    }
+}
+.container{
+    display: flex;
+    justify-content: space-between;
+    section{
+        padding-top: 4.444444444444445rem;
+        margin-top: 0rem;
+        padding-bottom: 4.444444444444445rem;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-family: 'Lato';
+        font-weight: lighter;
+        @media only screen and (max-width: 768px) {
+                padding-top: 1.444444rem;
+                padding-bottom: 1.444444rem;
+        }
+        p{
+            font-size: 1.25vw;
+            @media only screen and (max-width: 768px) {
+            font-size: 2.25vw;
+            }
+        }
+        strong.client-name{
+            font-size: 1.9vw;
+        }
+        .website{
+            padding-top:1vw ;
+            span{
+                border:0.5px solid black;
+                padding: 0.51vw;
+                cursor: pointer;
+                a{
+                    text-decoration: none;
+                    color: #212529;
+                    @media only screen and (max-width: 768px) {
+                        font-size: 3vw;
+                        padding: 2vw;
+                    }
+                }
+                
+            }
+            :hover{
+                background: black;
+                color: white;
+                padding: 0.81vw;
+                a{
+                color: white;
+                }
+            }
+        }
+
+    }
+}
+
+.memorix-display{
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    @media only screen and (max-width: 768px) {
+        height: 34vh;
+    }
+}
+
+.memorix-display-phone{
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    @media only screen and (max-width: 768px) {
+        height: 19vh;
+    }
+}   
