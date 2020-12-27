@@ -6,6 +6,13 @@
             padding-bottom: 2vw;
         }
     }
+    img{
+        width: 26vw;
+        height: 40vw;
+        @media only screen and (max-width: 768px) {
+            padding-bottom: 4vw;
+        }
+    }
 }
 .main-experience-container{
     display: grid;
