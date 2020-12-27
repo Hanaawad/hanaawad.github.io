@@ -21,6 +21,7 @@ import { YachtComponent } from './experience/yacht/yacht.component';
 import { BomaeComponent } from './experience/bomae/bomae.component';
 import { ItshanaawadComponent } from './experience/itshanaawad/itshanaawad.component';
 import { ArchitectureportfolioComponent } from './experience/architectureportfolio/architectureportfolio.component';
+import { NavlandingComponent } from './navlanding/navlanding.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { ArchitectureportfolioComponent } from './experience/architectureportfol
     YachtComponent,
     BomaeComponent,
     ItshanaawadComponent,
-    ArchitectureportfolioComponent
+    ArchitectureportfolioComponent,
+    NavlandingComponent
   ],
   imports: [
     BrowserModule,

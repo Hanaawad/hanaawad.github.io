@@ -1,0 +1,34 @@
+.navbar-hanaawad {
+    justify-content: space-between;
+    background: transparent;
+    padding-right: 11vw;
+    padding-left: 11vw;
+    padding-top: 2vw;
+  }
+  
+  .navbar-hanaawad .navbar-collapse {
+    flex-grow: 0;
+  }
+  
+  .navbar-hanaawad .navbar-brand img {
+    width: 40px;
+  }
+  
+  .navbar-light .navbar-toggler {
+    color:#957B5F;
+    border-color:#957B5F;
+  }
+  .navbar-light .navbar-nav .nav-link {
+    color: #957B5F;
+    
+    padding-left: 6vw;
+  }
+  .navbar-light .navbar-toggler-icon {
+    background-image: url('../../assets/images/navmobile.svg') !important;
+  }
+  .bg-white {
+    background-color: transparent!important;
+    @media only screen and (max-width: 768px) {
+      background-color: #0000006b !important;
+    }
+  }
