@@ -13,6 +13,7 @@ import { YachtComponent } from './experience/yacht/yacht.component';
 import { BomaeComponent } from './experience/bomae/bomae.component';
 import { ItshanaawadComponent } from './experience/itshanaawad/itshanaawad.component';
 import { ArchitectureportfolioComponent } from './experience/architectureportfolio/architectureportfolio.component';
+import { ContactmeComponent } from './contactme/contactme.component';
 
 
 const routes: Routes = [
@@ -29,7 +30,7 @@ const routes: Routes = [
   {path: 'Bomae', component: BomaeComponent},
   {path: 'itshanaawad', component: ItshanaawadComponent},
   {path: 'ArchitecturePortfolio', component: ArchitectureportfolioComponent},
-  
+  {path: 'Contactme', component: ContactmeComponent},
 ];
 
 @NgModule({

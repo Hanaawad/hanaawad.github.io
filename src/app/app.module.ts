@@ -22,6 +22,7 @@ import { BomaeComponent } from './experience/bomae/bomae.component';
 import { ItshanaawadComponent } from './experience/itshanaawad/itshanaawad.component';
 import { ArchitectureportfolioComponent } from './experience/architectureportfolio/architectureportfolio.component';
 import { NavlandingComponent } from './navlanding/navlanding.component';
+import { ContactmeComponent } from './contactme/contactme.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { NavlandingComponent } from './navlanding/navlanding.component';
     BomaeComponent,
     ItshanaawadComponent,
     ArchitectureportfolioComponent,
-    NavlandingComponent
+    NavlandingComponent,
+    ContactmeComponent
   ],
   imports: [
     BrowserModule,
