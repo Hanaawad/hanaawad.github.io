@@ -1,7 +1,8 @@
+
 .banner {
     background-size: cover;
     background-position: center;
-    height: 90vh;
+    height: 100vh;
   }
   
   .banner h1 {
@@ -17,7 +18,7 @@
     @media only screen and (max-width: 768px) {
       line-height: 10.5vw;
       font-size: 4VW;
-      text-align: justify;
+      text-align: left;
     }
   }
   
@@ -32,11 +33,24 @@
   
   .container{
     padding: 150px 0;
-    padding-right: 11vw;
-    padding-left: 11vw;
-    text-align: center;
+    padding-right: 5vw;
+    padding-left: 6vw;
+    text-align: left;
     p{
         margin-top: 2vw;
         color: #957B5F;
     }
+}
+.socail-platform{
+  display: flex;
+  a{
+    img{
+      width:3vw;
+      margin-left: 0.5vw;
+      @media only screen and (max-width: 768px) {
+        width: 7vw;
+        margin-left: 2.5vw;
+      }
+    }
+  }
 }
