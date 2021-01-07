@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import {  faChevronCircleDown  } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-bannerlanding',
@@ -7,7 +7,7 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./bannerlanding.component.scss']
 })
 export class BannerlandingComponent implements OnInit {
-  faCoffee = faCoffee;
+  faCoffee =  faChevronCircleDown ;
 
   constructor() { }
 

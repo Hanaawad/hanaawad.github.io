@@ -39,4 +39,25 @@
         margin-top: 2vw;
         color: #957B5F;
     }
+    fa-icon{
+      padding: 0.7vw;
+      font-size: 1.5vw;
+      @media only screen and (max-width: 768px) {
+        padding:1.5vw;
+        font-size: 3.5vw;
+      }
+    }
+}
+.object {
+  position: relative;
+  animation: mymove 7s infinite;
+}
+
+@keyframes mymove {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(100px);
+  }
 }
