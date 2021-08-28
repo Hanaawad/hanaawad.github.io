@@ -23,6 +23,7 @@ import { ItshanaawadComponent } from './experience/itshanaawad/itshanaawad.compo
 import { ArchitectureportfolioComponent } from './experience/architectureportfolio/architectureportfolio.component';
 import { NavlandingComponent } from './navlanding/navlanding.component';
 import { ContactmeComponent } from './contactme/contactme.component';
+import { EmailperformanceComponent } from './experience/emailperformance/emailperformance.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { ContactmeComponent } from './contactme/contactme.component';
     ItshanaawadComponent,
     ArchitectureportfolioComponent,
     NavlandingComponent,
-    ContactmeComponent
+    ContactmeComponent,
+    EmailperformanceComponent
   ],
   imports: [
     BrowserModule,
