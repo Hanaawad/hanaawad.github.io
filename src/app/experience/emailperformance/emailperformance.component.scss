@@ -1,0 +1,297 @@
+.banner {
+    background-size: cover;
+    background-position: center;
+    height: 71vh;
+    @media only screen and (max-width: 768px) {
+        height: 44vh;
+    }
+}
+.main-summary{
+    background: #F7F8FC;
+}
+.project-goal{
+    background: white !important ;
+}
+.ovni-wireframe{
+    height: 20vw;
+    background-size: cover;
+    background-position: center;
+}
+
+.flow{
+    display: grid;
+    grid-template-columns: 34.6vw 64vw;
+    justify-content: flex-end;
+    .container{
+        section{
+            padding-top: auto;
+        }
+    }
+    p{
+        font-size: 1.25vw;
+    }
+    .title-bold{
+        font-weight: 600;
+    }
+    img{
+        width: 100%;
+    }
+    ul.numbered-list {
+        text-align: justify;
+        @media only screen and (max-width: 768px) {
+            font-size: 3vw;
+            width: 83vw;    
+        }
+        
+    }
+    @media only screen and (max-width: 768px) {
+    display: block;
+    }
+}
+.insights{
+    display: grid;
+    .container{
+        section{
+            padding-top: auto;
+        }
+    }
+    p{
+        font-size: 1.25vw;
+    }
+    .title-bold{
+        font-weight: 600;
+    }
+    img{
+        width: 100%;
+    }
+    ul.numbered-list {
+        text-align: justify;
+    }
+}
+.wireframe{
+    display: grid;
+    grid-template-columns: 64vw 34.6vw;
+    .container{
+        background-color: #F7F9FA;
+        section{
+            padding-top: auto;
+        }
+        
+    }
+    p{
+        font-size: 1.25vw;
+    }
+    .title-bold{
+        font-weight: 600;
+    }
+    img{
+        width: 100%;
+    }
+    ul.numbered-list {
+        text-align: justify;
+        @media only screen and (max-width: 768px) {
+            font-size: 3vw;
+            width: 83vw;    
+        }
+    }
+    @media only screen and (max-width: 768px) {
+        display: block;
+    }
+}
+
+.sketching{
+    display: grid;
+    grid-template-columns: 64vw 34.6vw;
+    .container{
+        background-color: #F7F9FA;
+        section{
+            padding-top: auto;
+        }
+        
+    }
+    p{
+        font-size: 1.25vw;
+    }
+    .title-bold{
+        font-weight: 600;
+    }
+    img{
+        width: 100%;
+    }
+    ul.numbered-list {
+        text-align: justify;
+    }
+    @media only screen and (max-width: 768px) {
+        display: block;
+    }
+}
+.container-video{
+    display: grid;
+    justify-content: center;
+    img{
+        width:80vw;
+        height:61.6vw;
+        padding-top: 2vw;
+        padding-bottom: 2vw;
+        
+   
+    }
+}
+.problem-statment{
+    background: #F7F8FC;
+    .problem-layout{
+        width: 58vw;
+    
+        ul.numbered-list {
+            counter-reset: li;
+            list-style-type: none;
+            font-size: 14px;
+            line-height: 18px;
+            padding-left: 10px;
+            
+            li {
+                position: relative;   
+                padding: 5px 0 5px 30px;
+                margin-bottom: 2vw;
+                width: 36vw;
+                text-align: justify;
+                @media only screen and (max-width: 768px) {
+                    width: 83vw;
+                    font-size: 3vw;
+                }
+              
+              &:before {
+                content: counter(li);
+                counter-increment: li;
+                height: 20px;
+                width: 20px;
+                border: 1px solid black;
+                border-radius: 50%;
+                color: black;
+                text-align: center;
+                position: absolute;      
+                left: 0;
+                top: 4px;
+              }
+            }
+          }
+          @media only screen and (max-width: 768px) {
+            width: 97vw;
+        }
+    }
+}
+.next-project{
+    display: grid;
+    justify-content: center;
+    p{
+        text-align: center;
+    }
+}
+.container{
+    display: flex;
+    justify-content: space-between;
+    section{
+        padding-top: 4.444444444444445rem;
+        margin-top: 0rem;
+        padding-bottom: 4.444444444444445rem;
+        margin-top: auto;
+        margin-bottom: auto;
+        font-family: 'Lato';
+        font-weight: lighter;
+        @media only screen and (max-width: 768px) {
+                padding-top: 1.444444rem;
+                padding-bottom: 1.444444rem;
+        }
+        p{
+            font-size: 1.25vw;
+            @media only screen and (max-width: 768px) {
+            font-size: 2.25vw;
+            }
+        }
+        strong.client-name{
+            font-size: 1.9vw;
+        }
+        .website{
+            padding-top:1vw;
+            padding-bottom: 1vw;
+            span{
+                border:0.5px solid black;
+                padding: 0.51vw;
+                cursor: pointer;
+                a{
+                    text-decoration: none;
+                    color: #212529;
+                    @media only screen and (max-width: 768px) {
+                        font-size: 3vw;
+                        padding: 2vw;
+                    }
+                }
+                
+            }
+            :hover{
+                background: black;
+                color: white;
+                padding: 0.81vw;
+                a{
+                color: white;
+                }
+            }
+        }
+
+    }
+} 
+    video{
+        width:18vw;
+        height:38vw;
+        padding-top: 2vw;
+        padding-bottom: 2vw;
+   
+    }
+
+.ovni-display{
+    background-size: cover;
+    background-position: center;
+    height: 50vh;
+    @media only screen and (max-width: 768px) {
+        height: 34vh;
+    }
+}
+
+.ovni-display-phone{
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    @media only screen and (max-width: 768px) {
+        height: 19vh;
+    }
+}
+.sampleone{
+    padding: 2vw;
+    img{
+        height: 60vh;
+        @media only screen and (max-width: 768px) {
+        height: 30vh;
+
+        }
+    }
+    ul.numbered-list {
+        text-align: justify;
+        justify-content: space-evenly;
+        width: 32vw;
+        margin: auto;
+        p{
+            font-size: 1.25vw;
+            font-family: "Lato";
+            font-weight: lighter;
+            @media only screen and (max-width: 768px) {
+                font-size: 2.25vw;
+            }
+        }
+        @media only screen and (max-width: 768px) {
+            font-size: 3vw;
+            width: 83vw;    
+        }
+        
+    }
+
+}
