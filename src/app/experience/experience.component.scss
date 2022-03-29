@@ -66,6 +66,9 @@ h2{
 .website{
     height: 41vh;
 }
+.dashboard{
+    height: 41vh;
+}
 .oboutique{
     height: 84.5vh;
     @media only screen and (max-width: 768px) {
@@ -239,7 +242,9 @@ h2{
             }
             .website{
                 background-image:  linear-gradient(rgba(0, 0, 0, 0.70),rgba(0, 0, 0, 0.90)), url('../../assets/images/mywebsite.jpg') !important;
-
+            }
+            .dashboard{
+                background-image:  linear-gradient(rgba(0, 0, 0, 0.70),rgba(0, 0, 0, 0.90)), url('../../assets/images/perf.jpg') !important;
             }
             .container-details{
                 background-color: transparent;

@@ -22,6 +22,7 @@
     display: grid;
     grid-template-columns: 34.6vw 64vw;
     justify-content: flex-end;
+    align-items: center;
     .container{
         section{
             padding-top: auto;
@@ -258,7 +259,7 @@
 }
 
 .ovni-display-phone{
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     height: 100vh;
     @media only screen and (max-width: 768px) {
@@ -266,9 +267,9 @@
     }
 }
 .sampleone{
-    padding: 2vw;
+    // padding: 2vw;
     img{
-        height: 60vh;
+        height: 67vh;
         @media only screen and (max-width: 768px) {
         height: 30vh;
 
@@ -277,7 +278,7 @@
     ul.numbered-list {
         text-align: justify;
         justify-content: space-evenly;
-        width: 32vw;
+        width: 33vw;
         margin: auto;
         p{
             font-size: 1.25vw;
