@@ -15,6 +15,7 @@ import { ItshanaawadComponent } from './experience/itshanaawad/itshanaawad.compo
 import { ArchitectureportfolioComponent } from './experience/architectureportfolio/architectureportfolio.component';
 import { ContactmeComponent } from './contactme/contactme.component';
 import { EmailperformanceComponent } from './experience/emailperformance/emailperformance.component';
+import { SoundboksComponent } from './soundboks/soundboks.component';
 
 
 const routes: Routes = [
@@ -32,7 +33,9 @@ const routes: Routes = [
   {path: 'itshanaawad', component: ItshanaawadComponent},
   {path: 'ArchitecturePortfolio', component: ArchitectureportfolioComponent},
   {path: 'Contactme', component: ContactmeComponent},
-  {path: 'EmailPerformanceDashboard', component: EmailperformanceComponent}
+  {path: 'EmailPerformanceDashboard', component: EmailperformanceComponent},
+  {path: 'Soundboks', component: SoundboksComponent}
+
 
 ];
 

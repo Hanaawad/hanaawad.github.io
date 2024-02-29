@@ -24,6 +24,7 @@ import { ArchitectureportfolioComponent } from './experience/architectureportfol
 import { NavlandingComponent } from './navlanding/navlanding.component';
 import { ContactmeComponent } from './contactme/contactme.component';
 import { EmailperformanceComponent } from './experience/emailperformance/emailperformance.component';
+import { SoundboksComponent } from './soundboks/soundboks.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { EmailperformanceComponent } from './experience/emailperformance/emailpe
     ArchitectureportfolioComponent,
     NavlandingComponent,
     ContactmeComponent,
-    EmailperformanceComponent
+    EmailperformanceComponent,
+    SoundboksComponent
   ],
   imports: [
     BrowserModule,
