@@ -175,7 +175,32 @@ Fields I ADDED beyond the plan's list: `tier` (flagship/secondary/archive for ho
 - All images are wired from the old repo. For newer/higher-res screens, drop into `src/assets/images`
   and update the mapping in `scripts/prep-assets.mjs` (or use the Phase 6 guide).
 
-## Phase 5 — Downloadable ATS résumé (PDF) — _pending_
+## Phase 5 — Downloadable ATS résumé (PDF) ✅ DONE
+- **Real content, not invented**: the old résumé was 10 image slides (`src/assets/images/cv/Slide1-10.JPG`)
+  + `hanaresume.pdf` (image-only, no text layer). Transcribed the slides directly (they're readable
+  images) → every date/title/employer is real. No résumé TODOs remain.
+- **Single source of truth**: `site/src/data/resume.js` (plain ESM) — name, title, contact, summary,
+  7 experience entries (with dates + bullets), 6 education entries, LinkedIn certifications, grouped
+  skills, languages, hobbies. Both the page and the PDF import this one file.
+- **Résumé page** `site/src/pages/resume.astro`: renders the data as real selectable HTML, V4-styled
+  (experience/education/certs/skills/languages), with two **Download PDF** buttons.
+- **ATS PDF generator** `site/scripts/build-resume-pdf.mjs` (pdfkit, devDep): builds
+  `public/hana-awad-resume.pdf` — real selectable text, standard Helvetica, single column, standard
+  section headings (Experience/Education/Skills/…). Verified with pdf-parse: 3 pages, all key text
+  extracts (name, roles, dates, schools, skills). ATS-parseable, NOT an image.
+- **Wired into build**: `package.json` → `"build": "npm run build:pdf && astro build"`, so every build
+  regenerates the PDF into `public/` (Astro copies it to `dist/hana-awad-resume.pdf`). The nav **CV**
+  button and both résumé-page buttons point to `/hana-awad-resume.pdf` (download).
+- To regenerate manually: `cd site && node scripts/build-resume-pdf.mjs`. To edit content: edit
+  `src/data/resume.js` only.
+- `npm run build` passes — 8 pages + PDF. Committed `public/hana-awad-resume.pdf` as the deliverable.
+
+### Phase 5 notes (for Hana)
+- Résumé shows `hana@hanaawad.com` + phone `(+45) 93 83 90 46` (from the CV). The old contact page
+  listed `hanaawad_92@hotmail.com`; confirm which email you want public.
+- MSc/BSc attributed to AAST (your TA role confirms the affiliation; the degree slides only named
+  Alexandria). Adjust in `resume.js` if the awarding school differs.
+
 ## Phase 6 — "Add a project via prompt" workflow — _pending_
 ## Phase 7 — SEO, OG images, accessibility — _pending_
 ## Phase 8 — Ship + verify + retire Angular — _pending_
