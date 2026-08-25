@@ -150,8 +150,31 @@ Fields I ADDED beyond the plan's list: `tier` (flagship/secondary/archive for ho
   case-study pages, IntersectionObserver JS bundled, reduced-motion guard in CSS. `npm run build`
   passes — 8 pages, still near-zero render-blocking JS (one small bundled module + ClientRouter).
 
-## Phase 4 — Asset pipeline (413 MB problem) — _pending_
-## Phase 4 — Asset pipeline (413 MB problem) — _pending_
+## Phase 4 — Asset pipeline (413 MB problem) ✅ DONE
+- **Optimizer**: `site/scripts/prep-assets.mjs` (sharp) reads heavy originals from
+  `src/assets/images` and writes optimized sources into `site/src/assets/case-studies/<slug>/<key>.<ext>`.
+  Rules: raster → resized WebP q80; heavy SVG (>200 KB, embedded raster) → rasterized WebP;
+  small vector SVG → passed through. All flattened onto white (originals exported with transparency
+  render black on the dark theme). Re-run: `cd site && node scripts/prep-assets.mjs`.
+  - Wins: `fd.png` 2.4 MB→157 KB; `valuerebook.png` 24 MB→760 KB; email zone SVGs ~1 MB→30–52 KB;
+    `layout.svg` 5.6 MB→120 KB. **30 optimized sources, 2.7 MB total** (committed — Astro's build inputs).
+- **`Img.astro`**: resolves `slug`+`key` via `import.meta.glob`. Raster → Astro `<Image>` (AVIF+WebP,
+  responsive `srcset`, explicit w/h → no CLS); SVG → `<img>`; missing → `Placeholder`. Below-fold lazy;
+  case-study hero is priority (eager + high fetchpriority).
+- Wired: case-study hero, UX-process, insight, features, gallery, and the home `ProjectCard` cover
+  (16/10 `object-fit:cover`). Feature thumbs use a uniform 4/5 `object-fit:contain` frame.
+- **View transitions**: card cover + case-study hero share `cs-media-<slug>` → the shared-element
+  morph now animates the image too, not just the title.
+- **No GIFs / no video** in this design; the 73 MB `hanaintro.mov` intentionally omitted.
+- **Measured transferred weight**: Home **0.32 MB** (<1 MB ✅); Soundboks **0.43**, Email **0.41**,
+  Ovni **0.47** (<2 MB ✅). Fonts ~83 KB/page.
+- Ovni card/hero uses `ovnilanding.svg` (Group-* screens are transparent phone mockups). `npm run build`
+  passes — 8 pages, 85 image variants, zero placeholders remaining in case studies.
+
+### Phase 4 asset TODOs (for Hana)
+- All images are wired from the old repo. For newer/higher-res screens, drop into `src/assets/images`
+  and update the mapping in `scripts/prep-assets.mjs` (or use the Phase 6 guide).
+
 ## Phase 5 — Downloadable ATS résumé (PDF) — _pending_
 ## Phase 6 — "Add a project via prompt" workflow — _pending_
 ## Phase 7 — SEO, OG images, accessibility — _pending_

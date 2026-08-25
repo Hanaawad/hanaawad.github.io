@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Placeholder from '../../components/Placeholder.astro';
+import Img from '../../components/Img.astro';
 import Icon from '../../components/Icon.astro';
 
 export async function getStaticPaths() {
@@ -51,6 +51,17 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
         )
       }
     </section>
+
+    <!-- HERO IMAGE (shared-element target from the project card) -->
+    <div class="hero-media" transition:name={`cs-media-${entry.id}`}>
+      <Img
+        slug={entry.id}
+        key="hero"
+        alt={`${d.title} — hero`}
+        priority={true}
+        sizes="(max-width: 860px) 92vw, 820px"
+      />
+    </div>
 
     <!-- METRIC + FOCUS BAR -->
     {
@@ -124,7 +135,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
             ))}
           </div>
           <div class="process-img">
-            <Placeholder label={d.processImage ?? 'UX process'} ratio="16/9" />
+            <Img slug={entry.id} key={d.processImage} alt={`${d.title} — UX process`} sizes="(max-width: 860px) 92vw, 820px" />
           </div>
           {d.processCaption && <p class="caption">{d.processCaption}</p>}
         </section>
@@ -138,7 +149,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
           <h2 class="h2">{d.insightHeading}</h2>
           <p class="body">{d.insight}</p>
           <div class="process-img">
-            <Placeholder label={d.insightImage ?? 'affinity mapping'} ratio="16/9" />
+            <Img slug={entry.id} key={d.insightImage} alt={`${d.title} — ${d.insightHeading}`} sizes="(max-width: 860px) 92vw, 820px" />
           </div>
         </section>
       )
@@ -163,7 +174,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
             {d.features.map((f) => (
               <div class="feature">
                 <div class="feature-img">
-                  <Placeholder label={f.image ?? f.title} ratio="3/4" />
+                  <Img slug={entry.id} key={f.image} alt={`${d.title} — ${f.title}`} ratio="3/4" sizes="(max-width: 640px) 92vw, 400px" />
                 </div>
                 <div class="feature-txt">
                   <span class="feature-ico">
@@ -187,7 +198,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
           <div class="gallery">
             {d.gallery.map((s) => (
               <figure class="shot">
-                <Placeholder label={s.image} ratio="3/4" />
+                <Img slug={entry.id} key={s.image} alt={s.caption ?? `${d.title} screen`} ratio="3/4" sizes="(max-width: 640px) 92vw, 400px" />
                 {s.caption && <figcaption class="caption">{s.caption}</figcaption>}
               </figure>
             ))}
@@ -266,6 +277,19 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 28px;
+  }
+
+  .hero-media {
+    margin-top: 40px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background:
+      radial-gradient(120% 120% at 50% 0%, color-mix(in srgb, var(--glow) 10%, transparent), transparent 60%),
+      var(--panel);
+  }
+  .hero-media :global(img) {
+    border-radius: 0;
   }
   .link {
     display: inline-flex;
@@ -468,7 +492,19 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
     overflow: hidden;
   }
   .feature-img {
-    padding: 16px 16px 0;
+    aspect-ratio: 4 / 5;
+    margin: 14px 14px 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--panel-2);
+    border: 1px solid var(--hairline);
+  }
+  .feature-img :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+    border-radius: 0;
   }
   .feature-txt {
     padding: 16px 18px 20px;

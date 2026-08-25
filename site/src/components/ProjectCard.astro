@@ -1,5 +1,5 @@
 ---
-import Placeholder from './Placeholder.astro';
+import Img from './Img.astro';
 import Icon from './Icon.astro';
 
 export interface Props {
@@ -16,8 +16,8 @@ const { slug, title, client, role, summary, glow, metric, metricLabel } = Astro.
 ---
 
 <a class="card reveal" href={`/work/${slug}`} style={`--glow:${glow};`}>
-  <div class="card-media">
-    <Placeholder label={`${slug} hero`} ratio="16/10" />
+  <div class="card-media" transition:name={`cs-media-${slug}`}>
+    <Img slug={slug} key="hero" alt={`${title} — cover`} ratio="16/10" sizes="(max-width: 720px) 92vw, 520px" />
   </div>
   <div class="card-body">
     <p class="card-meta">{client} · {role}</p>
@@ -69,7 +69,16 @@ const { slug, title, client, role, summary, glow, metric, metricLabel } = Astro.
     opacity: 1;
   }
   .card-media {
-    padding: 16px 16px 0;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--panel-2);
+  }
+  .card-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
   }
   .card-body {
     padding: 18px 20px 22px;
