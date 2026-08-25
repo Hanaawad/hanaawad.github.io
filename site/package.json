@@ -8,6 +8,8 @@
     "start": "astro dev",
     "build:pdf": "node scripts/build-resume-pdf.mjs",
     "build": "npm run build:pdf && astro build",
+    "new-project": "node scripts/new-project.mjs",
+    "prep-assets": "node scripts/prep-assets.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

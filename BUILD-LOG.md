@@ -201,6 +201,18 @@ Fields I ADDED beyond the plan's list: `tier` (flagship/secondary/archive for ho
 - MSc/BSc attributed to AAST (your TA role confirms the affiliation; the degree slides only named
   Alexandria). Adjust in `resume.js` if the awarding school differs.
 
-## Phase 6 — "Add a project via prompt" workflow — _pending_
+## Phase 6 — "Add a project via prompt" workflow ✅ DONE
+- **`HOW-TO-ADD-A-PROJECT.md`** (repo root), addressed to Claude: step-by-step for turning
+  images + a description into a new case study (scaffold → fill frontmatter → place/optimize images →
+  set order/featured/tier → wire `next` → build → commit). Includes a **copy-paste prompt for Hana**
+  and the full frontmatter schema (mirror of the Zod schema).
+- **`npm run new-project -- <slug>`** (`site/scripts/new-project.mjs`): scaffolds a fully-stubbed
+  `src/content/case-studies/<slug>.mdx` (all fields + guidance comments) and creates
+  `src/assets/case-studies/<slug>/` with a README. Refuses to overwrite an existing study; slugifies input.
+- Also added **`npm run prep-assets`** as a friendly alias for the optimizer.
+- **Tested end-to-end**: scaffolded `test-project`, built (9 pages, `/work/test-project` rendered),
+  then deleted it and rebuilt clean (8 pages). `npm run build` passes.
+
+## Phase 7 — SEO, OG images, accessibility — _pending_
 ## Phase 7 — SEO, OG images, accessibility — _pending_
 ## Phase 8 — Ship + verify + retire Angular — _pending_
