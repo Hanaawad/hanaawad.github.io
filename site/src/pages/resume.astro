@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+// Placeholder — Phase 5 replaces this with the real résumé (selectable HTML from
+// a typed data file) plus a downloadable ATS-friendly PDF built from the same data.
+---
+
+<BaseLayout title="Résumé — Hana Awad" description="Hana Awad — résumé and CV.">
+  <main class="resume">
+    <p class="eyebrow">Résumé</p>
+    <h1 class="title"><span class="headline-gradient">Résumé & CV</span></h1>
+    <p class="note">
+      The full résumé — real selectable text with a downloadable ATS-friendly PDF — is being
+      built (Phase 5). In the meantime, see the <a href="/">selected work</a> or reach me at
+      <a href="mailto:hana@hanaawad.com">hana@hanaawad.com</a>.
+    </p>
+  </main>
+</BaseLayout>
+
+<style>
+  .resume {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(56px, 10vw, 110px) clamp(16px, 5vw, 40px) 100px;
+  }
+  .eyebrow {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    margin: 0 0 18px;
+  }
+  .title {
+    font-size: clamp(40px, 8vw, 68px);
+    letter-spacing: -0.02em;
+    margin: 0 0 28px;
+  }
+  .note {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 60ch;
+  }
+  .note a {
+    color: var(--text);
+    border-bottom: 1px solid var(--hairline-strong);
+    transition: border-color 0.2s var(--ease-out);
+  }
+  .note a:hover {
+    border-color: var(--accent);
+  }
+</style>

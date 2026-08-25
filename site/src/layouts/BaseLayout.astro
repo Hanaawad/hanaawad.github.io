@@ -1,16 +1,20 @@
 ---
 import '../styles/tokens.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 
 export interface Props {
   title?: string;
   description?: string;
   glow?: string;
+  chrome?: boolean; // include shared Nav + Footer (default true)
 }
 
 const {
   title = 'Hana Awad — UX Designer',
   description = 'Hana Awad — UX designer who designs usable interfaces and builds them.',
   glow,
+  chrome = true,
 } = Astro.props;
 ---
 
@@ -25,6 +29,8 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body style={glow ? `--glow: ${glow}; --accent: ${glow};` : undefined}>
+    {chrome && <Nav />}
     <slot />
+    {chrome && <Footer />}
   </body>
 </html>

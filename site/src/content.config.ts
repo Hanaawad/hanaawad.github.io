@@ -45,7 +45,7 @@ const caseStudies = defineCollection({
 
     // Narrative spine
     overview: z.string(),
-    problem: z.string(),
+    problem: z.string().optional(),
     goals: z
       .array(z.object({ title: z.string(), body: z.string() }))
       .default([]),
@@ -54,12 +54,12 @@ const caseStudies = defineCollection({
     processCaption: z.string().optional(),
 
     insightHeading: z.string().default('Gathering insights'),
-    insight: z.string(),
+    insight: z.string().optional(),
     insightImage: z.string().optional(),
 
     // The highlighted "key decision" block
     decisionHeading: z.string().default('The key decision'),
-    decision: z.string(),
+    decision: z.string().optional(),
 
     // Feature grid
     features: z
@@ -79,7 +79,7 @@ const caseStudies = defineCollection({
       .default([]),
 
     // Close
-    outcome: z.string(),
+    outcome: z.string().optional(),
     next: z.string().optional(),
   }),
 });

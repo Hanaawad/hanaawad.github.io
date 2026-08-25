@@ -103,8 +103,36 @@ Fields I ADDED beyond the plan's list: `tier` (flagship/secondary/archive for ho
 - Soundboks `year` — unknown, left blank rather than invented.
 - Real outcome figures — the outcome text is descriptive of what shipped; no invented metrics.
 
-## Phase 2 — Remaining case studies + home + about + nav — _pending_
-## Phase 2 — Remaining case studies + home + about + nav — _pending_
+## Phase 2 — Remaining case studies + home + about + nav ✅ DONE
+- Case studies written from real Angular copy:
+  - **email-performance-dashboard.mdx** (flagship, order 2, glow `#8b7ff0`) — 6 dashboard zones as
+    features (Dashboard zoning, Overall insight, Campaign stats, Campaign tracking, Label tracking,
+    Responses & demographics); decision = most-important-data-top-left.
+  - **ovni.mdx** (flagship, order 3, glow `#e0b84a`) — features Explore / Make money / Make a wish /
+    Profile; role notes UX **and** front-end; links to ovni.io.
+  - **memorix.mdx** (secondary, order 4, glow `#5eb0ef`) — includes the real "70% forgotten in 24h" line.
+  - **valuer.mdx** (secondary, order 5, glow `#c98bdb`) — short entry (e-book design), overview + gallery only.
+- Schema relaxed so short entries work: `problem`, `insight`, `decision`, `outcome` are now OPTIONAL;
+  the template guards each section.
+- **Home** (`index.astro`): V4 hero (status chip, gradient headline, intro, stats row **6 / 3 / UX+FE**),
+  flagship glow-card grid (`ProjectCard.astro`), a secondary "Also" grid, and a text **More work** archive list.
+- **About** (`about.astro`): real architect→UX story + skills chips (all evidenced — nothing invented).
+- **Nav** + **Footer** now in `BaseLayout` (prop `chrome`, default on). Nav = Work / About / Résumé / CV.
+- **resume.astro**: tidy placeholder (Phase 5 replaces with real résumé + ATS PDF).
+- Verified: next-links resolve soundboks→email→ovni→memorix→valuer; home cards + archive + 3 glows;
+  email zones + top-left decision. `npm run build` passes — **8 pages**.
+
+### Project tiers
+- **Flagship:** Soundboks, Email Performance Dashboard, Ovni.
+- **Secondary:** Memorix, Valuer.
+- **Archive (text list only):** Danon, Tumble, Yacht, Bomae, O Boutique, Architecture Portfolio.
+
+### Phase 2 content TODOs (for Hana)
+- Secondary glow accents (`#5eb0ef`, `#c98bdb`) are UI choices, not brand colours — change if preferred.
+- Contact email shown is `hana@hanaawad.com` (matches approved V4 reference); old site listed
+  `hanaawad_92@hotmail.com` + phone `(+45) 93839046` — confirm which to display.
+- Home stat "6 projects" — confirm the headline number.
+
 ## Phase 3 — Motion system — _pending_
 ## Phase 4 — Asset pipeline (413 MB problem) — _pending_
 ## Phase 5 — Downloadable ATS résumé (PDF) — _pending_

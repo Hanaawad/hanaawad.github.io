@@ -1,40 +1,225 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const studies = (await getCollection('caseStudies')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const flagships = studies.filter((s) => s.data.tier === 'flagship');
+const secondary = studies.filter((s) => s.data.tier === 'secondary');
+const archive = ['Danon', 'Tumble', 'Yacht', 'Bomae', 'O Boutique', 'Architecture Portfolio'];
+
+const stats = [
+  { num: '6', label: 'projects' },
+  { num: '3', label: 'flagship case studies' },
+  { num: 'UX + FE', label: 'design & build' },
+];
 ---
 
 <BaseLayout title="Hana Awad — UX Designer">
-  <main
-    style="min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:clamp(20px,6vw,80px); max-width:820px; margin:0 auto;"
-  >
-    <!-- Radial glow accent behind the hero -->
-    <div
-      aria-hidden="true"
-      style="position:fixed; inset:0; z-index:-1; background:
-        radial-gradient(600px 400px at 20% 15%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
-        pointer-events:none;"
-    >
-    </div>
+  <div class="glow-field" aria-hidden="true"></div>
 
-    <span
-      style="display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--text-secondary); margin-bottom:24px;"
-    >
-      <span
-        style="width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px 1px var(--accent);"
-      ></span>
+  <!-- HERO -->
+  <header class="hero">
+    <span class="status">
+      <span class="status-dot"></span>
       Copenhagen · open to UX roles
     </span>
-
-    <h1 style="font-size:clamp(38px,7vw,66px); letter-spacing:-0.02em; margin-bottom:20px;">
+    <h1 class="headline">
       <span class="headline-gradient">I design usable interfaces — and build them.</span>
     </h1>
-
-    <p style="font-size:clamp(16px,2.4vw,19px); color:var(--text-secondary); max-width:56ch;">
-      Placeholder home page — Phase&nbsp;0 proves that Fraunces + Inter, the V4 tokens, and the
-      Astro + Tailwind + MDX build all work together on the <code>#0e0e10</code> background.
+    <p class="intro">
+      UX designer with front-end experience and an architect's eye for structure — ex-architect
+      from Alexandria, Egypt, now in Copenhagen. I take products from research and information
+      architecture through to designed, shipped interfaces.
     </p>
 
-    <p style="margin-top:32px; font-size:13px; color:var(--text-muted); font-family:var(--font-serif);">
-      Fraunces heading test · <span style="font-family:var(--font-sans);">Inter body test</span>
-    </p>
-  </main>
+    <div class="stats">
+      {
+        stats.map((s) => (
+          <div class="stat">
+            <span class="stat-num">{s.num}</span>
+            <span class="stat-label">{s.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </header>
+
+  <!-- FLAGSHIP GRID -->
+  <section class="work">
+    <h2 class="section-h">Selected work</h2>
+    <div class="grid">
+      {
+        flagships.map((s) => (
+          <ProjectCard
+            slug={s.id}
+            title={s.data.title}
+            client={s.data.client}
+            role={s.data.role}
+            summary={s.data.summary}
+            glow={s.data.glow}
+            metric={s.data.metric}
+            metricLabel={s.data.metricLabel}
+          />
+        ))
+      }
+    </div>
+
+    {
+      secondary.length > 0 && (
+        <>
+          <h2 class="section-h more">Also</h2>
+          <div class="grid two">
+            {secondary.map((s) => (
+              <ProjectCard
+                slug={s.id}
+                title={s.data.title}
+                client={s.data.client}
+                role={s.data.role}
+                summary={s.data.summary}
+                glow={s.data.glow}
+              />
+            ))}
+          </div>
+        </>
+      )
+    }
+
+    <!-- ARCHIVE text list -->
+    <div class="archive reveal">
+      <h2 class="section-h">More work</h2>
+      <ul class="archive-list">
+        {archive.map((a) => <li>{a}</li>)}
+      </ul>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .glow-field {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      680px 460px at 18% 8%,
+      color-mix(in srgb, var(--accent) 14%, transparent),
+      transparent 70%
+    );
+  }
+
+  .hero {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: clamp(56px, 10vw, 120px) clamp(16px, 5vw, 40px) clamp(32px, 5vw, 56px);
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 26px;
+  }
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px 1px var(--accent);
+  }
+  .headline {
+    font-size: clamp(40px, 8vw, 76px);
+    letter-spacing: -0.025em;
+    max-width: 16ch;
+    margin: 0 0 24px;
+  }
+  .intro {
+    font-size: clamp(16px, 2.4vw, 20px);
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 44px;
+    padding-top: 28px;
+    border-top: 1px solid var(--hairline);
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat-num {
+    font-family: var(--font-serif);
+    font-size: clamp(28px, 4vw, 38px);
+    color: var(--text);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .work {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 24px clamp(16px, 5vw, 40px) 80px;
+  }
+  .section-h {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    margin: 40px 0 20px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+  .grid.two {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .archive {
+    margin-top: 56px;
+    padding-top: 8px;
+  }
+  .archive-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px 24px;
+    border-top: 1px solid var(--hairline);
+    padding-top: 22px;
+  }
+  .archive-list li {
+    font-size: 16px;
+    color: var(--text-secondary);
+    padding: 6px 0;
+    border-bottom: 1px solid transparent;
+  }
+
+  @media (max-width: 720px) {
+    .grid,
+    .grid.two {
+      grid-template-columns: 1fr;
+    }
+    .archive-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
