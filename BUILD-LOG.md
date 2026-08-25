@@ -133,7 +133,24 @@ Fields I ADDED beyond the plan's list: `tier` (flagship/secondary/archive for ho
   `hanaawad_92@hotmail.com` + phone `(+45) 93839046` — confirm which to display.
 - Home stat "6 projects" — confirm the headline number.
 
-## Phase 3 — Motion system — _pending_
+## Phase 3 — Motion system ✅ DONE
+- **Scroll-reveal**: IntersectionObserver in `BaseLayout` fades+translates `.reveal` elements in
+  with a light stagger (sibling index × 70ms, capped). Re-inits on every `astro:page-load` so it
+  survives View Transitions navigations. Elements already above the fold on load reveal immediately.
+- **Progressive enhancement / reduced-motion**: an `is:inline` head script adds `.reveal-ready` to
+  `<html>` ONLY when `prefers-reduced-motion` is not set. Reveal hidden-state CSS is scoped to
+  `.reveal-ready .reveal`, so with no JS OR reduced motion, content is fully visible immediately.
+  A `@media (prefers-reduced-motion: reduce)` block also neutralises reveal + view-transition anims.
+- **View Transitions**: Astro `<ClientRouter />` in `BaseLayout` head. Shared-element morph —
+  project card title (`cs-title-<slug>`) → case-study hero title. (Hero-IMAGE morph will be added in
+  Phase 4 once real hero images exist; note the transition:name convention `cs-media-<slug>` for it.)
+- **Glow-on-hover** on cards (ProjectCard `::before` radial glow) + **animated underline**
+  (`.link-underline`) on footer social links.
+- Verified in build: `data-astro-transition`, `reveal-ready`, `cs-title-*` on both home cards and
+  case-study pages, IntersectionObserver JS bundled, reduced-motion guard in CSS. `npm run build`
+  passes — 8 pages, still near-zero render-blocking JS (one small bundled module + ClientRouter).
+
+## Phase 4 — Asset pipeline (413 MB problem) — _pending_
 ## Phase 4 — Asset pipeline (413 MB problem) — _pending_
 ## Phase 5 — Downloadable ATS résumé (PDF) — _pending_
 ## Phase 6 — "Add a project via prompt" workflow — _pending_

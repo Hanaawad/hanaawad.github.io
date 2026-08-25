@@ -21,7 +21,7 @@ const { slug, title, client, role, summary, glow, metric, metricLabel } = Astro.
   </div>
   <div class="card-body">
     <p class="card-meta">{client} · {role}</p>
-    <h3 class="card-title">
+    <h3 class="card-title" transition:name={`cs-title-${slug}`}>
       {title}
       <Icon name="arrow" size={20} class="card-arrow" />
     </h3>

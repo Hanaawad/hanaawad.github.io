@@ -100,6 +100,62 @@ img {
   border-radius: 3px;
 }
 
+/* ============================================================
+   Motion layer (Phase 3)
+   Progressive enhancement: reveal styles only apply once JS has
+   added `.reveal-ready` to <html>, AND only when motion is allowed.
+   With no JS or prefers-reduced-motion, `.reveal` stays fully visible.
+   ============================================================ */
+.reveal-ready .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  will-change: opacity, transform;
+}
+.reveal-ready .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Animated underline for text links */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s var(--ease-out);
+}
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready .reveal,
+  .reveal-ready .reveal.in {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .link-underline::after {
+    transition: none;
+  }
+  /* Neutralise any view-transition animation */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* Gradient headline utility */
 .headline-gradient {
   background: linear-gradient(

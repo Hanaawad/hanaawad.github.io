@@ -34,7 +34,9 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
     <!-- HERO -->
     <section class="hero reveal">
       <p class="eyebrow">{metaLine}</p>
-      <h1 class="title"><span class="headline-gradient">{d.title}</span></h1>
+      <h1 class="title" transition:name={`cs-title-${entry.id}`}>
+        <span class="headline-gradient">{d.title}</span>
+      </h1>
       <p class="summary">{d.summary}</p>
       {
         d.links.length > 0 && (
