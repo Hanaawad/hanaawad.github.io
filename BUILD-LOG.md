@@ -43,7 +43,67 @@ that branch instead. Same intent (isolated feature branch off `master`, no force
 ### Phase 0 left / notes for Phase 1
 - Nothing outstanding. Next: content collection + Zod schema + Soundboks case study (text only).
 
-## Phase 1 — Content model + Soundboks case study — _pending_
+## Phase 1 — Content model + Soundboks case study ✅ DONE
+- Content collection `caseStudies` defined in `site/src/content.config.ts` using Astro 5's
+  Content Layer glob loader (`glob({ pattern: '**/*.mdx', base: './src/content/case-studies' })`).
+- One reusable template renders the whole spine: `site/src/pages/work/[slug].astro`
+  (Hero → metric+focus bar → Overview → Problem → Goals grid → UX process → Insights →
+  **Key decision** highlighted block → Features grid → Screens gallery → Outcome → Next link).
+  Styled to V4; per-project glow flows from frontmatter `glow` via BaseLayout.
+- Helper components: `Placeholder.astro` (labeled boxes — Phase 4 swaps real images),
+  `Icon.astro` (inline-SVG set, safe fallback to a dot on unknown names).
+- Soundboks written to `site/src/content/case-studies/soundboks.mdx` from the real Angular
+  copy in `src/app/soundboks/soundboks.component.html`. Features TeamUp / Sound Profiles /
+  Custom EQ / Pro Panel with exact copy; insight = affinity-mapping-with-teammate story;
+  decision = rebuild IA around scalability. `next: email-performance-dashboard`.
+- Verified in built HTML: title, role, affinity mapping, all 4 features, "The key decision",
+  App Store link, glow `#e0794a`, +34% all present. Next-link correctly hidden (target not
+  built until Phase 2). `npm run build` passes (2 pages).
+
+### Final Zod schema (reference for future phases — mirror this when adding projects)
+```
+title: string
+client: string
+location?: string
+year?: string            // OPTIONAL on purpose — never invent a date
+role: string
+order: number = 99
+featured: boolean = false
+tier: 'flagship' | 'secondary' | 'archive' = 'flagship'   // added field
+glow: string = '#e0794a'
+summary: string
+focus?: string
+metric?: string
+metricLabel?: string
+tags: string[] = []
+links: { label: string; icon?: string; url: string }[] = []
+overview: string
+problem: string
+goals: { title: string; body: string }[] = []
+methods: string[] = []
+processImage?: string        // image key; resolved to real asset in Phase 4
+processCaption?: string
+insightHeading: string = 'Gathering insights'
+insight: string
+insightImage?: string
+decisionHeading: string = 'The key decision'
+decision: string
+features: { title: string; icon?: string; body: string; image?: string }[] = []
+gallery: { image: string; caption?: string }[] = []
+outcome: string
+next?: string                // slug of the next case study
+```
+Fields I ADDED beyond the plan's list: `tier` (flagship/secondary/archive for home grouping),
+`focus`, `processImage`/`processCaption`, `insightImage`, `decisionHeading`. `year` made optional
+(don't invent). Image fields hold string KEYS now; Phase 4 maps them to processed assets.
+
+### Phase 1 TODOs surfaced (for Hana)
+- Soundboks `+34%` / `metricLabel: user engagement` — BOTH the figure and what it measures need
+  confirmation (currently placeholders, flagged in the MDX and here).
+- Soundboks `year` — unknown, left blank rather than invented.
+- Real outcome figures — the outcome text is descriptive of what shipped; no invented metrics.
+
+## Phase 2 — Remaining case studies + home + about + nav — _pending_
 ## Phase 2 — Remaining case studies + home + about + nav — _pending_
 ## Phase 3 — Motion system — _pending_
 ## Phase 4 — Asset pipeline (413 MB problem) — _pending_
