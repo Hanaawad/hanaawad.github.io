@@ -214,5 +214,27 @@ Fields I ADDED beyond the plan's list: `tier` (flagship/secondary/archive for ho
   then deleted it and rebuilt clean (8 pages). `npm run build` passes.
 
 ## Phase 7 — SEO, OG images, accessibility — _pending_
-## Phase 7 — SEO, OG images, accessibility — _pending_
-## Phase 8 — Ship + verify + retire Angular — _pending_
+## Phase 7 — SEO, OG images, accessibility ✅ DONE
+- **SEO head** (BaseLayout): per-page `<title>` + meta description, `<link rel="canonical">`,
+  full **Open Graph** and **Twitter** `summary_large_image` tags, `theme-color`. `ogImage` prop per
+  page; case studies pass their own card.
+- **OG images**: `site/scripts/build-og.mjs` (sharp) renders a 1200×630 card per case study + a
+  `default.png` into `public/og/` — dark bg, per-project glow, serif title (solid white), client·role
+  eyebrow, "Hana Awad" branding. Wired into `npm run build` (`build:og`). Tags resolve to absolute
+  `https://hanaawad.com/og/<slug>.png`.
+- **Sitemap**: `@astrojs/sitemap` emits `sitemap-index.xml`.
+- **Landmarks**: BaseLayout renders one `<main id="content">` around the slot; removed nested `<main>`
+  from about/resume. Nav `<header>` = banner, Footer = contentinfo. **Skip-to-content** link added.
+- **Contrast fix**: `--text-muted` `#71717a → #8a8a93` — old failed AA (3.99/3.73:1), new passes
+  (5.6/5.3:1). Other tokens already passed.
+- **Alt text** on every image (0 without alt).
+- **axe-core (wcag2a/2aa/21a/21aa) = 0 violations** on home, case study, about, résumé. Focus visible,
+  reduced-motion honored. `npm run build` passes — 8 pages + PDF + 6 OG images.
+
+### Phase 7 note (for Hana)
+- Muted grey is slightly lighter now (`#8a8a93`) so small labels meet WCAG AA.
+
+## Phase 8 — Ship + verify + retire Angular — _pending_ (⚠ destructive step — see below)
+> Phase 8 removes the Angular app and changes deploy/hosting. Left for a deliberate go-ahead
+> because it's destructive/irreversible and involves a hosting decision. Everything through Phase 7
+> is a complete, working site under `site/`.

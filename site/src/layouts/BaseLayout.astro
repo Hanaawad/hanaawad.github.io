@@ -9,14 +9,19 @@ export interface Props {
   description?: string;
   glow?: string;
   chrome?: boolean; // include shared Nav + Footer (default true)
+  ogImage?: string; // absolute-from-root path, e.g. /og/soundboks.png
 }
 
 const {
   title = 'Hana Awad — UX Designer',
-  description = 'Hana Awad — UX designer who designs usable interfaces and builds them.',
+  description = 'Hana Awad — UX designer who designs usable interfaces and builds them. Copenhagen-based, ex-architect, with front-end experience.',
   glow,
   chrome = true,
+  ogImage = '/og/default.png',
 } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogUrl = new URL(ogImage, Astro.site).href;
 ---
 
 <!doctype html>
@@ -25,9 +30,29 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
+
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Hana Awad" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+
+    <meta name="theme-color" content="#0e0e10" />
     <ClientRouter />
     <!-- Enable reveal animations only when motion is allowed (runs before paint). -->
     <script is:inline>
@@ -41,8 +66,11 @@ const {
     </script>
   </head>
   <body style={glow ? `--glow: ${glow}; --accent: ${glow};` : undefined}>
+    <a class="skip-link" href="#content">Skip to content</a>
     {chrome && <Nav />}
-    <slot />
+    <main id="content" tabindex="-1">
+      <slot />
+    </main>
     {chrome && <Footer />}
 
     <script>

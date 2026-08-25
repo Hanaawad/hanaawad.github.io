@@ -17,7 +17,8 @@
   /* Text */
   --text: #f4f4f5;
   --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
+  /* muted bumped from #71717a → #8a8a93 to pass WCAG AA (4.5:1) on bg/panel */
+  --text-muted: #8a8a93;
 
   /* Accents */
   --accent: #e0794a;          /* primary / Soundboks */
@@ -93,11 +94,32 @@ img {
   color: var(--text);
 }
 
-/* Focus visibility — accessibility baseline (hardened in Phase 7) */
+/* Focus visibility — accessibility baseline */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
   border-radius: 3px;
+}
+
+/* Skip-to-content link — visible only on keyboard focus */
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: #16130f;
+  font-size: 14px;
+  font-weight: 600;
+  transition: top 0.15s var(--ease-out);
+}
+.skip-link:focus {
+  top: 12px;
+}
+#content:focus {
+  outline: none;
 }
 
 /* ============================================================

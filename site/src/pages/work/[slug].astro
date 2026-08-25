@@ -27,7 +27,12 @@ if (d.next) {
 const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
 ---
 
-<BaseLayout title={`${d.title} — Hana Awad`} description={d.summary} glow={d.glow}>
+<BaseLayout
+  title={`${d.title} — Hana Awad`}
+  description={d.summary}
+  glow={d.glow}
+  ogImage={`/og/${entry.id}.png`}
+>
   <div class="glow-field" aria-hidden="true"></div>
 
   <article class="cs">
