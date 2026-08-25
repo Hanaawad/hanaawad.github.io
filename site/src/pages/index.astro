@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Hana Awad — UX Designer">
+  <main
+    style="min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:clamp(20px,6vw,80px); max-width:820px; margin:0 auto;"
+  >
+    <!-- Radial glow accent behind the hero -->
+    <div
+      aria-hidden="true"
+      style="position:fixed; inset:0; z-index:-1; background:
+        radial-gradient(600px 400px at 20% 15%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
+        pointer-events:none;"
+    >
+    </div>
+
+    <span
+      style="display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--text-secondary); margin-bottom:24px;"
+    >
+      <span
+        style="width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px 1px var(--accent);"
+      ></span>
+      Copenhagen · open to UX roles
+    </span>
+
+    <h1 style="font-size:clamp(38px,7vw,66px); letter-spacing:-0.02em; margin-bottom:20px;">
+      <span class="headline-gradient">I design usable interfaces — and build them.</span>
+    </h1>
+
+    <p style="font-size:clamp(16px,2.4vw,19px); color:var(--text-secondary); max-width:56ch;">
+      Placeholder home page — Phase&nbsp;0 proves that Fraunces + Inter, the V4 tokens, and the
+      Astro + Tailwind + MDX build all work together on the <code>#0e0e10</code> background.
+    </p>
+
+    <p style="margin-top:32px; font-size:13px; color:var(--text-muted); font-family:var(--font-serif);">
+      Fraunces heading test · <span style="font-family:var(--font-sans);">Inter body test</span>
+    </p>
+  </main>
+</BaseLayout>
