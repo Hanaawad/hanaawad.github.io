@@ -15,9 +15,12 @@ const OUT = resolve(__dirname, '../public/hana-awad-resume.pdf');
 mkdirSync(dirname(OUT), { recursive: true });
 
 const M = 54; // page margin
-const INK = '#1a1a1f';
-const MUTE = '#555';
-const ACCENT = '#c05f33'; // darker accent for print contrast on white
+// Dark theme to match the site (hanaawad.com/resume). Text stays real/selectable.
+const BG = '#0e0e10';
+const INK = '#f4f4f5';
+const MUTE = '#a1a1aa';
+const ACCENT = '#e0794a';
+const RULE = '#2a2a30';
 
 const doc = new PDFDocument({
   size: 'A4',
@@ -34,12 +37,22 @@ doc.pipe(createWriteStream(OUT));
 const W = doc.page.width - M * 2;
 const dateRange = (e) => e.date ?? [e.start, e.end].filter(Boolean).join(' – ');
 
+// Paint the dark background behind every page (does not move the text cursor).
+function paintBg() {
+  doc.save();
+  doc.rect(0, 0, doc.page.width, doc.page.height).fill(BG);
+  doc.restore();
+  doc.fillColor(INK);
+}
+paintBg();
+doc.on('pageAdded', paintBg);
+
 function rule() {
   doc
     .moveTo(M, doc.y)
     .lineTo(M + W, doc.y)
     .lineWidth(0.6)
-    .strokeColor('#d9d9de')
+    .strokeColor(RULE)
     .stroke();
   doc.moveDown(0.5);
 }
@@ -71,13 +84,16 @@ for (const e of r.experience) {
   const rangeText = dateRange(e);
   const rangeWidth = 140;
   const y0 = doc.y;
-  doc.font('Helvetica-Bold').fontSize(10.5).fillColor(INK).text(`${e.role} — ${e.org}`, M, y0, { width: W - rangeWidth });
+  doc.font('Helvetica-Bold').fontSize(10.5).fillColor(INK).text(`${e.role} — ${e.org}`, M, y0, { width: W - rangeWidth - 12 });
+  const afterRoleY = doc.y;
   doc.font('Helvetica').fontSize(9).fillColor(MUTE).text(rangeText, M + W - rangeWidth, y0 + 1, { width: rangeWidth, align: 'right' });
-  doc.font('Helvetica-Oblique').fontSize(9).fillColor(MUTE).text(e.location);
+  doc.x = M;
+  doc.y = afterRoleY; // restore flow to the end of the (possibly wrapped) title
+  doc.font('Helvetica-Oblique').fontSize(9).fillColor(MUTE).text(e.location, M, doc.y, { width: W });
   doc.moveDown(0.2);
   doc.font('Helvetica').fontSize(9.5).fillColor(INK);
   for (const b of e.bullets) {
-    doc.text(`•  ${b}`, { indent: 8, lineGap: 1, paragraphGap: 1.5 });
+    doc.text(`•  ${b}`, M, doc.y, { width: W, indent: 8, lineGap: 1, paragraphGap: 1.5 });
   }
   doc.moveDown(0.5);
 }
@@ -89,10 +105,13 @@ for (const e of r.education) {
   const rangeText = dateRange(e);
   const rangeWidth = 140;
   const y0 = doc.y;
-  doc.font('Helvetica-Bold').fontSize(10).fillColor(INK).text(e.title, M, y0, { width: W - rangeWidth });
+  doc.font('Helvetica-Bold').fontSize(10).fillColor(INK).text(e.title, M, y0, { width: W - rangeWidth - 12 });
+  const afterTitleY = doc.y;
   doc.font('Helvetica').fontSize(9).fillColor(MUTE).text(rangeText, M + W - rangeWidth, y0 + 1, { width: rangeWidth, align: 'right' });
-  doc.font('Helvetica').fontSize(9.5).fillColor(MUTE).text(`${e.org} · ${e.location}`);
-  if (e.note) doc.font('Helvetica').fontSize(9).fillColor(INK).text(e.note, { lineGap: 1 });
+  doc.x = M;
+  doc.y = afterTitleY;
+  doc.font('Helvetica').fontSize(9.5).fillColor(MUTE).text(`${e.org} · ${e.location}`, M, doc.y, { width: W });
+  if (e.note) doc.font('Helvetica').fontSize(9).fillColor(INK).text(e.note, M, doc.y, { width: W, lineGap: 1 });
   doc.moveDown(0.45);
 }
 

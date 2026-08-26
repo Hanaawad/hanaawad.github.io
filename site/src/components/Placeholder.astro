@@ -12,10 +12,9 @@ const { label = 'image', ratio = '16/9', class: klass = '' } = Astro.props;
   class={`ph ${klass}`}
   style={`aspect-ratio:${ratio};`}
   role="img"
-  aria-label={`Placeholder: ${label}`}
+  aria-label={label}
 >
-  <span class="ph-label">{label}</span>
-  <span class="ph-note">image · Phase 4</span>
+  <span class="ph-dot" aria-hidden="true"></span>
 </div>
 
 <style>
@@ -27,20 +26,17 @@ const { label = 'image', ratio = '16/9', class: klass = '' } = Astro.props;
     justify-content: center;
     gap: 6px;
     border-radius: var(--radius);
-    border: 1px dashed var(--hairline-strong);
+    border: 1px solid var(--hairline);
     background:
-      radial-gradient(120% 120% at 50% 0%, color-mix(in srgb, var(--glow) 8%, transparent), transparent 60%),
+      radial-gradient(130% 130% at 50% 0%, color-mix(in srgb, var(--glow) 16%, transparent), transparent 62%),
       var(--panel);
-    color: var(--text-muted);
   }
-  .ph-label {
-    font-size: 13px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-  }
-  .ph-note {
-    font-size: 11px;
-    color: var(--text-muted);
+  .ph-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--glow);
+    box-shadow: 0 0 12px 2px color-mix(in srgb, var(--glow) 60%, transparent);
+    opacity: 0.85;
   }
 </style>

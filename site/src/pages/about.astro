@@ -12,8 +12,37 @@ const skills = [
   'Wireframing',
   'Prototyping',
   'UI design',
+  'Design systems',
   'Figma',
   'Front-end (HTML · CSS · Angular)',
+];
+
+// What I own as a senior / lead designer — from the Soundboks lead role.
+const leading = [
+  {
+    title: 'Own the UX strategy end-to-end',
+    body: 'Lead the direction from research and information architecture through to shipped interfaces — translating business requirements and user insights into product concepts.',
+  },
+  {
+    title: 'Lead research & discovery',
+    body: 'Run research projects, synthesise findings with the team, and turn pain points into a prioritised, evidenced roadmap.',
+  },
+  {
+    title: 'Build the design system',
+    body: 'Create and maintain a Figma component library and design frameworks so the team ships faster and the UI stays consistent.',
+  },
+  {
+    title: 'Partner across the org',
+    body: 'Work closely with Product Owners, Engineers, and the Brand & Creative teams from conception to launch, in an agile, weekly-sprint process.',
+  },
+  {
+    title: 'Design for scalability',
+    body: 'Set up information architecture and patterns that scale to new product categories without another ground-up redesign.',
+  },
+  {
+    title: 'Bridge design and build',
+    body: 'Because I also write front-end code, I keep the handoff honest and the shipped product close to the intent.',
+  },
 ];
 ---
 
@@ -42,10 +71,28 @@ const skills = [
         and carrying it through to interfaces that are clear, usable, and shipped.
       </p>
       <p>
-        Because I also write front-end code, I design with the grain of what's buildable —
-        which keeps the handoff honest and the final product close to the intent.
+        As a <strong>Senior UX Design Lead</strong>, my work goes beyond screens: I set the UX
+        direction for a product, lead research and discovery, and build the design systems and
+        rituals that let a cross-functional team move quickly without losing consistency. I
+        partner with product and engineering from the first idea through to launch — and, because
+        I also write front-end code, I design with the grain of what's buildable, which keeps the
+        handoff honest and the final product close to the intent.
       </p>
     </div>
+
+    <section class="leading">
+      <h2 class="section-h">As a design lead</h2>
+      <div class="lead-grid">
+        {
+          leading.map((l) => (
+            <div class="lead-item">
+              <h3 class="lead-title">{l.title}</h3>
+              <p class="lead-body">{l.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
 
     <section class="skills">
       <h2 class="section-h">What I do</h2>
@@ -98,8 +145,33 @@ const skills = [
     font-size: clamp(20px, 3vw, 26px);
     line-height: 1.5;
   }
+  .leading {
+    margin-top: 56px;
+  }
+  .lead-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .lead-item {
+    padding: 20px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+  .lead-title {
+    font-size: 16px;
+    margin: 0 0 8px;
+    font-family: var(--font-serif);
+  }
+  .lead-body {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+  }
   .skills {
-    margin-top: 48px;
+    margin-top: 56px;
     padding-top: 8px;
   }
   .section-h {
@@ -122,5 +194,10 @@ const skills = [
     border-radius: 999px;
     border: 1px solid var(--hairline-strong);
     background: var(--panel);
+  }
+  @media (max-width: 560px) {
+    .lead-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
