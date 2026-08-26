@@ -3,16 +3,16 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 
-const studies = (await getCollection('caseStudies')).sort(
-  (a, b) => a.data.order - b.data.order,
-);
+const studies = (await getCollection('caseStudies'))
+  .filter((s) => !s.data.hidden)
+  .sort((a, b) => a.data.order - b.data.order);
 const flagships = studies.filter((s) => s.data.tier === 'flagship');
 const secondary = studies.filter((s) => s.data.tier === 'secondary');
 const archive = studies.filter((s) => s.data.tier === 'archive');
 
 const stats = [
   { num: '6', label: 'projects' },
-  { num: '4', label: 'flagship case studies' },
+  { num: '3', label: 'flagship case studies' },
   { num: 'UX + FE', label: 'design & build' },
 ];
 ---
