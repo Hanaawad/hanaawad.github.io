@@ -1,0 +1,598 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Img from '../../components/Img.astro';
+import Icon from '../../components/Icon.astro';
+
+export async function getStaticPaths() {
+  const studies = await getCollection('caseStudies');
+  return studies.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+
+// Resolve the "next" case study title if it exists.
+let nextEntry: { id: string; title: string } | null = null;
+if (d.next) {
+  const all = await getCollection('caseStudies');
+  const found = all.find((e) => e.id === d.next);
+  if (found) nextEntry = { id: found.id, title: found.data.title };
+}
+
+const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
+---
+
+<BaseLayout
+  title={`${d.title} — Hana Awad`}
+  description={d.summary}
+  glow={d.glow}
+  ogImage={`/og/${entry.id}.png`}
+>
+  <div class="glow-field" aria-hidden="true"></div>
+
+  <article class="cs">
+    <!-- HERO -->
+    <section class="hero reveal">
+      <p class="eyebrow">{metaLine}</p>
+      <h1 class="title" transition:name={`cs-title-${entry.id}`}>
+        <span class="headline-gradient">{d.title}</span>
+      </h1>
+      <p class="summary">{d.summary}</p>
+      {
+        d.links.length > 0 && (
+          <div class="links">
+            {d.links.map((l) => (
+              <a class="link" href={l.url} target="_blank" rel="noopener noreferrer">
+                <Icon name={l.icon ?? 'external'} size={16} />
+                {l.label}
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </section>
+
+    <!-- HERO IMAGE (shared-element target from the project card) -->
+    <div class="hero-media" transition:name={`cs-media-${entry.id}`}>
+      <Img
+        slug={entry.id}
+        key="hero"
+        alt={`${d.title} — hero`}
+        priority={true}
+        sizes="(max-width: 860px) 92vw, 820px"
+      />
+    </div>
+
+    <!-- METRIC + FOCUS BAR -->
+    {
+      (d.metric || d.focus) && (
+        <section class="bar reveal">
+          {d.metric && (
+            <div class="bar-cell">
+              <span class="bar-num">{d.metric}</span>
+              <span class="bar-lbl">{d.metricLabel}</span>
+            </div>
+          )}
+          {d.focus && (
+            <div class="bar-cell">
+              <span class="bar-num small">{d.focus}</span>
+              <span class="bar-lbl">focus</span>
+            </div>
+          )}
+          {d.tags.length > 0 && (
+            <div class="bar-cell tags">
+              {d.tags.map((t) => (
+                <span class="chip">{t}</span>
+              ))}
+            </div>
+          )}
+        </section>
+      )
+    }
+
+    <!-- OVERVIEW -->
+    <section class="block reveal">
+      <h2 class="h2">Overview</h2>
+      <p class="lede">{d.overview}</p>
+    </section>
+
+    <!-- PROBLEM -->
+    {
+      d.problem && (
+        <section class="block reveal">
+          <h2 class="h2">The problem</h2>
+          <p class="body">{d.problem}</p>
+        </section>
+      )
+    }
+
+    <!-- GOALS -->
+    {
+      d.goals.length > 0 && (
+        <section class="block reveal">
+          <h2 class="h2">Project goals</h2>
+          <div class="goals">
+            {d.goals.map((g, i) => (
+              <div class="goal">
+                <span class="goal-n">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="goal-t">{g.title}</h3>
+                <p class="goal-b">{g.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <!-- UX PROCESS -->
+    {
+      d.methods.length > 0 && (
+        <section class="block reveal">
+          <h2 class="h2">UX process</h2>
+          <div class="methods">
+            {d.methods.map((m) => (
+              <span class="method">{m}</span>
+            ))}
+          </div>
+          <div class="process-img">
+            <Img slug={entry.id} key={d.processImage} alt={`${d.title} — UX process`} sizes="(max-width: 860px) 92vw, 820px" />
+          </div>
+          {d.processCaption && <p class="caption">{d.processCaption}</p>}
+        </section>
+      )
+    }
+
+    <!-- INSIGHTS -->
+    {
+      d.insight && (
+        <section class="block reveal">
+          <h2 class="h2">{d.insightHeading}</h2>
+          <p class="body">{d.insight}</p>
+          <div class="process-img">
+            <Img slug={entry.id} key={d.insightImage} alt={`${d.title} — ${d.insightHeading}`} sizes="(max-width: 860px) 92vw, 820px" />
+          </div>
+        </section>
+      )
+    }
+
+    <!-- KEY DECISION (highlighted) -->
+    {
+      d.decision && (
+        <section class="decision reveal">
+          <span class="decision-kicker"><span class="dot" />{d.decisionHeading}</span>
+          <p class="decision-body">{d.decision}</p>
+        </section>
+      )
+    }
+
+    <!-- FEATURES -->
+    {
+      d.features.length > 0 && (
+        <section class="block reveal">
+          <h2 class="h2">Key features</h2>
+          <div class="features">
+            {d.features.map((f) => (
+              <div class="feature">
+                <div class="feature-img">
+                  <Img slug={entry.id} key={f.image} alt={`${d.title} — ${f.title}`} ratio="3/4" sizes="(max-width: 640px) 92vw, 400px" />
+                </div>
+                <div class="feature-txt">
+                  <span class="feature-ico">
+                    <Icon name={f.icon ?? 'dot'} size={18} />
+                  </span>
+                  <h3 class="feature-t">{f.title}</h3>
+                  <p class="feature-b">{f.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <!-- GALLERY -->
+    {
+      d.gallery.length > 0 && (
+        <section class="block reveal">
+          <h2 class="h2">Screens</h2>
+          <div class="gallery">
+            {d.gallery.map((s) => (
+              <figure class="shot">
+                <Img slug={entry.id} key={s.image} alt={s.caption ?? `${d.title} screen`} ratio="3/4" sizes="(max-width: 640px) 92vw, 400px" />
+                {s.caption && <figcaption class="caption">{s.caption}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <!-- OUTCOME -->
+    {
+      d.outcome && (
+        <section class="block reveal">
+          <h2 class="h2">Outcome</h2>
+          <p class="body">{d.outcome}</p>
+        </section>
+      )
+    }
+
+    <!-- optional MDX body -->
+    <div class="mdx reveal"><Content /></div>
+
+    <!-- NEXT -->
+    {
+      nextEntry && (
+        <a class="next reveal" href={`/work/${nextEntry.id}`}>
+          <span class="next-kicker">Next project</span>
+          <span class="next-title">
+            {nextEntry.title}
+            <Icon name="arrow" size={22} />
+          </span>
+        </a>
+      )
+    }
+  </article>
+</BaseLayout>
+
+<style>
+  .glow-field {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      620px 420px at 80% -5%,
+      color-mix(in srgb, var(--glow) 16%, transparent),
+      transparent 70%
+    );
+  }
+
+  .cs {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: clamp(40px, 8vw, 96px) clamp(16px, 5vw, 40px) 40px;
+  }
+
+  /* HERO */
+  .eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--text-secondary);
+    margin: 0 0 18px;
+  }
+  .title {
+    font-size: clamp(40px, 8vw, 72px);
+    letter-spacing: -0.02em;
+    margin: 0 0 22px;
+  }
+  .summary {
+    font-size: clamp(17px, 2.6vw, 21px);
+    color: var(--text-secondary);
+    max-width: 60ch;
+    margin: 0;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .hero-media {
+    margin-top: 40px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background:
+      radial-gradient(120% 120% at 50% 0%, color-mix(in srgb, var(--glow) 10%, transparent), transparent 60%),
+      var(--panel);
+  }
+  .hero-media :global(img) {
+    border-radius: 0;
+  }
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 15px;
+    border-radius: 999px;
+    border: 1px solid var(--hairline-strong);
+    background: var(--panel);
+    font-size: 14px;
+    color: var(--text);
+    transition: border-color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  }
+  .link:hover {
+    border-color: var(--glow);
+    transform: translateY(-2px);
+  }
+
+  /* METRIC BAR */
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 44px 0 8px;
+    padding: 20px 22px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--glow) 6%, var(--panel)),
+      var(--panel)
+    );
+  }
+  .bar-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-right: 22px;
+  }
+  .bar-cell + .bar-cell {
+    border-left: 1px solid var(--hairline);
+    padding-left: 22px;
+  }
+  .bar-num {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    color: var(--glow);
+    line-height: 1;
+  }
+  .bar-num.small {
+    font-size: 18px;
+    color: var(--text);
+  }
+  .bar-lbl {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+  .bar-cell.tags {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    border-left: 1px solid var(--hairline);
+    padding-left: 22px;
+  }
+
+  .chip,
+  .method {
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--hairline-strong);
+    background: var(--panel-2);
+  }
+
+  /* BLOCKS */
+  .block {
+    margin: 56px 0;
+  }
+  .h2 {
+    font-size: clamp(13px, 2vw, 14px);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    margin: 0 0 18px;
+  }
+  .lede {
+    font-size: clamp(19px, 3vw, 24px);
+    line-height: 1.5;
+    color: var(--text);
+    font-family: var(--font-serif);
+    margin: 0;
+  }
+  .body {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 66ch;
+    margin: 0;
+  }
+
+  /* GOALS */
+  .goals {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .goal {
+    padding: 20px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+  .goal-n {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    color: var(--glow);
+  }
+  .goal-t {
+    font-size: 18px;
+    margin: 8px 0 8px;
+  }
+  .goal-b {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* METHODS */
+  .methods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .process-img {
+    margin-top: 8px;
+  }
+  .caption {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 10px 0 0;
+  }
+
+  /* DECISION */
+  .decision {
+    margin: 64px 0;
+    padding: clamp(24px, 5vw, 40px);
+    border-radius: var(--radius-lg);
+    border: 1px solid color-mix(in srgb, var(--glow) 30%, var(--hairline));
+    background:
+      radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--glow) 14%, transparent), transparent 55%),
+      var(--panel);
+  }
+  .decision-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--glow);
+    margin-bottom: 14px;
+  }
+  .decision-kicker .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--glow);
+    box-shadow: 0 0 10px 1px var(--glow);
+  }
+  .decision-body {
+    font-family: var(--font-serif);
+    font-size: clamp(21px, 3.4vw, 28px);
+    line-height: 1.45;
+    color: var(--text);
+    margin: 0;
+  }
+
+  /* FEATURES */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .feature {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    background: var(--panel);
+    overflow: hidden;
+  }
+  .feature-img {
+    aspect-ratio: 4 / 5;
+    margin: 14px 14px 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--panel-2);
+    border: 1px solid var(--hairline);
+  }
+  .feature-img :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+    border-radius: 0;
+  }
+  .feature-txt {
+    padding: 16px 18px 20px;
+  }
+  .feature-ico {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    color: var(--glow);
+    background: color-mix(in srgb, var(--glow) 12%, transparent);
+    margin-bottom: 12px;
+  }
+  .feature-t {
+    font-size: 17px;
+    letter-spacing: 0.02em;
+    margin: 0 0 8px;
+  }
+  .feature-b {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* GALLERY */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .shot {
+    margin: 0;
+  }
+
+  /* NEXT */
+  .next {
+    display: block;
+    margin-top: 40px;
+    padding: 28px clamp(20px, 4vw, 32px);
+    border-radius: var(--radius);
+    border: 1px solid var(--hairline);
+    background: var(--panel);
+    transition: border-color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  }
+  .next:hover {
+    border-color: var(--glow);
+    transform: translateY(-2px);
+  }
+  .next-kicker {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+  .next-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-serif);
+    font-size: clamp(24px, 4vw, 34px);
+    color: var(--text);
+    margin-top: 8px;
+  }
+
+  .mdx:empty {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .goals,
+    .features {
+      grid-template-columns: 1fr;
+    }
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .bar-cell.tags {
+      border-left: 0;
+      padding-left: 0;
+    }
+  }
+</style>

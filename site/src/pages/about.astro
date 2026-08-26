@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const skills = [
+  'UX strategy',
+  'Information architecture',
+  'User research',
+  'Customer interviews',
+  'Personas',
+  'Customer journeys',
+  'Affinity mapping',
+  'Wireframing',
+  'Prototyping',
+  'UI design',
+  'Figma',
+  'Front-end (HTML · CSS · Angular)',
+];
+---
+
+<BaseLayout
+  title="About — Hana Awad"
+  description="Hana Awad — UX designer with front-end experience and an architect's background, based in Copenhagen."
+>
+  <div class="glow-field" aria-hidden="true"></div>
+
+  <div class="about">
+    <p class="eyebrow">About</p>
+    <h1 class="title">
+      <span class="headline-gradient">From buildings to interfaces.</span>
+    </h1>
+
+    <div class="prose">
+      <p>
+        I'm Hana Awad — a passionate interface and UX designer with front-end developer
+        experience, and an ex-architect from Alexandria, Egypt, now living in Copenhagen,
+        Denmark.
+      </p>
+      <p>
+        Architecture taught me to think in structure and flow: how people move through a
+        space, what they see first, and how everything fits together. I bring that same
+        instinct to digital products — starting from research and information architecture,
+        and carrying it through to interfaces that are clear, usable, and shipped.
+      </p>
+      <p>
+        Because I also write front-end code, I design with the grain of what's buildable —
+        which keeps the handoff honest and the final product close to the intent.
+      </p>
+    </div>
+
+    <section class="skills">
+      <h2 class="section-h">What I do</h2>
+      <div class="chips">
+        {skills.map((s) => <span class="chip">{s}</span>)}
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .glow-field {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      620px 420px at 80% 0%,
+      color-mix(in srgb, var(--accent) 13%, transparent),
+      transparent 70%
+    );
+  }
+  .about {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(56px, 10vw, 110px) clamp(16px, 5vw, 40px) 80px;
+  }
+  .eyebrow {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    margin: 0 0 18px;
+  }
+  .title {
+    font-size: clamp(40px, 8vw, 68px);
+    letter-spacing: -0.02em;
+    margin: 0 0 32px;
+  }
+  .prose p {
+    font-size: clamp(17px, 2.6vw, 20px);
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 64ch;
+    margin: 0 0 20px;
+  }
+  .prose p:first-child {
+    color: var(--text);
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 3vw, 26px);
+    line-height: 1.5;
+  }
+  .skills {
+    margin-top: 48px;
+    padding-top: 8px;
+  }
+  .section-h {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin: 0 0 18px;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+  .chip {
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--hairline-strong);
+    background: var(--panel);
+  }
+</style>

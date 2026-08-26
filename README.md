@@ -1,27 +1,43 @@
-# HanaAwad
+# hanaawad.com — Hana Awad portfolio
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.4.
+Personal portfolio for Hana Awad — UX designer & ex-architect, Copenhagen.
+Built with **Astro + Tailwind + MDX**, static output, near-zero JS. Direction
+V4 (sleek dark / premium). The whole site lives in [`site/`](./site).
 
-## Development server
+## Develop
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```bash
+cd site
+npm install
+npm run dev        # local dev server
+npm run build      # résumé PDF + OG images + static build → site/dist
+npm run preview    # preview the production build
+```
 
-## Code scaffolding
+## Add a project
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Adding a case study = one MDX file + images, no component code. See
+[`HOW-TO-ADD-A-PROJECT.md`](./HOW-TO-ADD-A-PROJECT.md), or:
 
-## Build
+```bash
+cd site
+npm run new-project -- my-slug   # scaffold MDX + image folder
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Content
 
-## Running unit tests
+- Case studies: `site/src/content/case-studies/*.mdx` (typed frontmatter,
+  schema in `site/src/content.config.ts`).
+- Résumé: single source of truth in `site/src/data/resume.js` — powers both the
+  résumé page and the generated ATS PDF (`npm run build:pdf`).
+- Images: optimized sources in `site/src/assets/case-studies/`; the optimizer
+  `site/scripts/prep-assets.mjs` regenerates them from heavy originals.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Deploy
 
-## Running end-to-end tests
+GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml`): pushes to
+`master` build `site/` and publish to Pages. Custom domain `hanaawad.com` is
+carried by `site/public/CNAME`. In **Settings → Pages**, set
+**Source → GitHub Actions**.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Build & progress history: [`BUILD-LOG.md`](./BUILD-LOG.md).

@@ -1,0 +1,16 @@
+# build output
+dist/
+# generated build artifacts (produced by `npm run build`)
+public/hana-awad-resume.pdf
+public/og/
+# generated types
+.astro/
+# dependencies
+node_modules/
+# logs
+npm-debug.log*
+# environment
+.env
+.env.production
+# macOS
+.DS_Store

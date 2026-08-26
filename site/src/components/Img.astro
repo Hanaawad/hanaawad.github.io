@@ -1,0 +1,81 @@
+---
+import { Image } from 'astro:assets';
+import Placeholder from './Placeholder.astro';
+
+export interface Props {
+  slug: string;
+  key?: string;
+  alt: string;
+  sizes?: string;
+  ratio?: string; // used only by the placeholder fallback
+  loading?: 'lazy' | 'eager';
+  priority?: boolean; // hero: eager + high fetchpriority
+  class?: string;
+}
+
+const {
+  slug,
+  key,
+  alt,
+  sizes = '(max-width: 640px) 92vw, 640px',
+  ratio = '16/9',
+  loading,
+  priority = false,
+  class: klass = '',
+} = Astro.props;
+
+// Eagerly index every optimized case-study asset.
+const modules = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/case-studies/**/*.{webp,png,jpg,jpeg,svg}',
+  { eager: true },
+);
+
+function resolve(ext: string) {
+  const path = `../assets/case-studies/${slug}/${key}.${ext}`;
+  return modules[path]?.default;
+}
+
+const webp = key ? resolve('webp') : undefined;
+const svg = key ? resolve('svg') : undefined;
+const img = webp ?? svg;
+const isSvg = !webp && !!svg;
+
+const load = loading ?? (priority ? 'eager' : 'lazy');
+---
+
+{
+  img && !isSvg ? (
+    <Image
+      src={img}
+      alt={alt}
+      widths={[480, 800, Math.min(img.width, 1400)]}
+      sizes={sizes}
+      formats={['avif', 'webp']}
+      loading={load}
+      decoding={priority ? 'auto' : 'async'}
+      fetchpriority={priority ? 'high' : 'auto'}
+      class={`img ${klass}`}
+    />
+  ) : img && isSvg ? (
+    <img
+      src={img.src}
+      width={img.width}
+      height={img.height}
+      alt={alt}
+      loading={load}
+      decoding="async"
+      class={`img ${klass}`}
+    />
+  ) : (
+    <Placeholder label={key ?? alt} ratio={ratio} class={klass} />
+  )
+}
+
+<style>
+  .img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius);
+  }
+</style>
