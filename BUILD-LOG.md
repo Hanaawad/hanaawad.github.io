@@ -234,7 +234,39 @@ Fields I ADDED beyond the plan's list: `tier` (flagship/secondary/archive for ho
 ### Phase 7 note (for Hana)
 - Muted grey is slightly lighter now (`#8a8a93`) so small labels meet WCAG AA.
 
-## Phase 8 — Ship + verify + retire Angular — _pending_ (⚠ destructive step — see below)
-> Phase 8 removes the Angular app and changes deploy/hosting. Left for a deliberate go-ahead
-> because it's destructive/irreversible and involves a hosting decision. Everything through Phase 7
-> is a complete, working site under `site/`.
+## Phase 8 — Ship + verify + retire Angular ✅ DONE
+- **Host = GitHub Pages via Actions** (chosen by Hana). Workflow `.github/workflows/deploy.yml`
+  builds `site/` (`npm ci` → `npm run build`) and deploys to Pages. Custom domain kept via
+  `site/public/CNAME` = `hanaawad.com`.
+  - **ACTION REQUIRED by Hana to go live**: in the repo **Settings → Pages → Build and deployment
+    → Source**, select **GitHub Actions**. Then merge this branch to `master` — the workflow runs and
+    publishes. (DNS for hanaawad.com already points at GitHub Pages, so no DNS change needed.)
+- **Lighthouse (mobile)** on the production build: **Home Perf 99 / A11y 100 / BP 100 / SEO 100,
+  LCP 1.8s; Soundboks 99 / 100 / 100 / 100, LCP 1.7s.** Beats every target (≥90/≥95/≥95/≥95, <2.5s).
+  axe-core = 0 WCAG AA violations (Phase 7). Keyboard walkthrough: skip-link → nav → cards/links all
+  reachable with visible focus.
+- **Angular retired** (separate commit): removed `src/` (incl. the 413 MB of original assets),
+  `angular.json`, `e2e/`, root `package.json`/`package-lock.json`, `tsconfig*.json`, `tslint.json`,
+  `karma.conf.js`, `browserslist`. The site is now self-contained in `site/`. README rewritten for the
+  new stack. Note: `site/scripts/prep-assets.mjs` reads originals from the (now-removed) root
+  `src/assets/images` — to re-optimize in future, restore the needed originals first; the already-
+  optimized webp/svg in `site/src/assets/case-studies/` are committed and are what the build uses.
+
+## Before / after
+- **Stack**: Angular ~10 + Bootstrap + jQuery (all EOL) → Astro 5 + Tailwind + MDX (static, ~0 JS).
+- **Page weight**: heavy GIF/PNG/MOV (100s of MB of assets) → Home **0.32 MB**, case studies **~0.4 MB**.
+- **Repo**: 413 MB of raw assets → ~2.7 MB of optimized sources (originals dropped).
+- **Lighthouse mobile**: 99 / 100 / 100 / 100, LCP < 1.8s. WCAG AA (axe: 0 violations).
+- **Résumé**: 10 image slides → real selectable HTML + generated ATS PDF from one data file.
+- **Adding work**: edit Angular components → one MDX file + images (`npm run new-project`).
+
+## Remaining TODOs for Hana (open questions — nothing blocking the build)
+1. **Soundboks metric** "+34% user engagement" — confirm the real figure and what it measures
+   (placeholder, flagged in `soundboks.mdx`).
+2. **Email dashboard** — a "time-to-decision" hero metric if you want one (currently none shown).
+3. **Contact email** — site + résumé show `hana@hanaawad.com`; the old site listed
+   `hanaawad_92@hotmail.com` (+ phone `(+45) 93 83 90 46`). Confirm which to show publicly.
+4. **Case-study years** — left blank rather than invented; add to each `.mdx` if you want them.
+5. **Secondary glow accents** (`#5eb0ef` Memorix, `#c98bdb` Valuer) and the home stat "6 projects" —
+   tweak to taste.
+6. **Go-live**: set Pages Source → GitHub Actions, then merge to `master`.
