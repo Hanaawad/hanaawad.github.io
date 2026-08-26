@@ -10,7 +10,7 @@ export const resume = {
   email: 'hana@hanaawad.com',
   phone: '(+45) 93 83 90 46',
   links: {
-    linkedin: 'https://www.linkedin.com/in/hana-awad-96071b150/',
+    linkedin: 'https://dk.linkedin.com/in/hana-awad-96071b150',
     site: 'https://hanaawad.com',
   },
 

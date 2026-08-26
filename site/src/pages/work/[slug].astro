@@ -212,6 +212,23 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
       )
     }
 
+    <!-- DEMOS (animated) -->
+    {
+      d.demos.length > 0 && (
+        <section class="block reveal">
+          <h2 class="h2">In motion</h2>
+          <div class:list={['demos', { single: d.demos.length === 1 }]}>
+            {d.demos.map((m) => (
+              <figure class="demo">
+                <img src={m.src} alt={m.caption ?? `${d.title} demo`} loading="lazy" decoding="async" />
+                {m.caption && <figcaption class="caption">{m.caption}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
     <!-- OUTCOME -->
     {
       d.outcome && (
@@ -547,6 +564,29 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
     margin: 0;
   }
 
+  /* DEMOS */
+  .demos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .demos.single {
+    grid-template-columns: 1fr;
+    max-width: 900px;
+  }
+  .demo {
+    margin: 0;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--panel-2);
+  }
+  .demo img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
   /* NEXT */
   .next {
     display: block;
@@ -588,6 +628,9 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
       grid-template-columns: 1fr;
     }
     .gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .demos {
       grid-template-columns: repeat(2, 1fr);
     }
     .bar-cell.tags {

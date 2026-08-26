@@ -78,6 +78,11 @@ const caseStudies = defineCollection({
       .array(z.object({ image: z.string(), caption: z.string().optional() }))
       .default([]),
 
+    // Animated demos (animated WebP in /public/media, referenced by absolute path)
+    demos: z
+      .array(z.object({ src: z.string(), caption: z.string().optional() }))
+      .default([]),
+
     // Close
     outcome: z.string().optional(),
     next: z.string().optional(),

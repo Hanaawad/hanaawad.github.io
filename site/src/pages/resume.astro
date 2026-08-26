@@ -21,7 +21,9 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
         <p class="contact">
           <span>{r.location}</span>
           <span aria-hidden="true">·</span>
-          <a class="link-underline" href={`mailto:${r.email}`}>{r.email}</a>
+          <a class="link-underline" href={`mailto:${r.email}`}><!--email_off-->{r.email}<!--/email_off--></a>
+          <span aria-hidden="true">·</span>
+          <a class="link-underline" href={`tel:${r.phone.replace(/[^+\d]/g, '')}`}>{r.phone}</a>
           <span aria-hidden="true">·</span>
           <a class="link-underline" href={r.links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </p>

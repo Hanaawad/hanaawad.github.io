@@ -1,6 +1,8 @@
 ---
-// Contact + archive links. Archive is a plain text list (no dedicated pages).
-const archive = ['Danon', 'Tumble', 'Yacht', 'Bomae', 'O Boutique', 'Architecture Portfolio'];
+import { getCollection } from 'astro:content';
+const archive = (await getCollection('caseStudies'))
+  .filter((s) => s.data.tier === 'archive')
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 
 <footer class="foot">
@@ -8,16 +10,17 @@ const archive = ['Danon', 'Tumble', 'Yacht', 'Bomae', 'O Boutique', 'Architectur
     <div class="foot-col">
       <p class="foot-brand">Hana Awad</p>
       <p class="foot-line">Copenhagen · open to UX roles</p>
-      <a class="foot-mail" href="mailto:hana@hanaawad.com">hana@hanaawad.com</a>
+      {/* email_off tells Cloudflare's Email Obfuscation to leave the address alone */}
+      <a class="foot-mail" href="mailto:hana@hanaawad.com"><!--email_off-->hana@hanaawad.com<!--/email_off--></a>
       <div class="foot-social">
-        <a class="link-underline" href="https://www.linkedin.com/in/hana-awad-96071b150/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="link-underline" href="https://dk.linkedin.com/in/hana-awad-96071b150" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a class="link-underline" href="https://www.pinterest.com/hanaawad/_created/" target="_blank" rel="noopener noreferrer">Pinterest</a>
       </div>
     </div>
     <div class="foot-col">
       <p class="foot-h">More work</p>
       <ul class="foot-archive">
-        {archive.map((a) => <li>{a}</li>)}
+        {archive.map((a) => <li><a href={`/work/${a.id}`}>{a.data.title}</a></li>)}
       </ul>
     </div>
   </div>
@@ -81,7 +84,13 @@ const archive = ['Danon', 'Tumble', 'Yacht', 'Bomae', 'O Boutique', 'Architectur
     display: grid;
     gap: 8px;
     font-size: 15px;
+  }
+  .foot-archive a {
     color: var(--text-secondary);
+    transition: color 0.18s var(--ease-out);
+  }
+  .foot-archive a:hover {
+    color: var(--text);
   }
   .foot-fine {
     max-width: 1080px;
