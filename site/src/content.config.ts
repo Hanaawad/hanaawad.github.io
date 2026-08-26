@@ -23,6 +23,9 @@ const caseStudies = defineCollection({
     order: z.number().default(99),
     featured: z.boolean().default(false),
     tier: z.enum(['flagship', 'secondary', 'archive']).default('flagship'),
+    // hidden: keep the MDX in the repo but exclude it from the built site
+    // (no page, and not listed on home or in the footer). Flip to false to publish.
+    hidden: z.boolean().default(false),
 
     // Per-project glow accent (hex)
     glow: z.string().default('#e0794a'),

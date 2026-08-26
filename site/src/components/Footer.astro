@@ -2,9 +2,9 @@
 import { getCollection } from 'astro:content';
 import { resume } from '../data/resume.js';
 
-const studies = (await getCollection('caseStudies')).sort(
-  (a, b) => a.data.order - b.data.order,
-);
+const studies = (await getCollection('caseStudies'))
+  .filter((s) => !s.data.hidden)
+  .sort((a, b) => a.data.order - b.data.order);
 const selected = studies.filter((s) => s.data.tier !== 'archive');
 const archive = studies.filter((s) => s.data.tier === 'archive');
 

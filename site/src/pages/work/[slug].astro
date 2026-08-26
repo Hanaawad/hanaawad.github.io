@@ -5,7 +5,7 @@ import Img from '../../components/Img.astro';
 import Icon from '../../components/Icon.astro';
 
 export async function getStaticPaths() {
-  const studies = await getCollection('caseStudies');
+  const studies = (await getCollection('caseStudies')).filter((s) => !s.data.hidden);
   return studies.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },
@@ -20,7 +20,7 @@ const { Content } = await render(entry);
 let nextEntry: { id: string; title: string } | null = null;
 if (d.next) {
   const all = await getCollection('caseStudies');
-  const found = all.find((e) => e.id === d.next);
+  const found = all.find((e) => e.id === d.next && !e.data.hidden);
   if (found) nextEntry = { id: found.id, title: found.data.title };
 }
 
