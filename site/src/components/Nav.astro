@@ -3,17 +3,33 @@ import Icon from './Icon.astro';
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path.startsWith(href);
+const links = [
+  { href: '/', label: 'Work', on: path === '/' },
+  { href: '/about', label: 'About', on: isActive('/about') },
+  { href: '/hobbies', label: 'Hobbies', on: isActive('/hobbies') },
+  { href: '/resume', label: 'Résumé', on: isActive('/resume') },
+];
 ---
 
 <header class="nav">
   <a href="/" class="brand">Hana Awad</a>
+
+  <!-- Desktop / tablet inline nav -->
   <nav class="links" aria-label="Primary">
-    <a href="/" class:list={['tab', { on: isActive('/') && path === '/' }]}>Work</a>
-    <a href="/about" class:list={['tab', { on: isActive('/about') }]}>About</a>
-    <a href="/hobbies" class:list={['tab', { on: isActive('/hobbies') }]}>Hobbies</a>
-    <a href="/resume" class:list={['tab', { on: isActive('/resume') }]}>Résumé</a>
+    {links.map((l) => <a href={l.href} class:list={['tab', { on: l.on }]}>{l.label}</a>)}
     <a href="/hana-awad-resume.pdf" class="cv" download>CV <Icon name="arrow" size={14} /></a>
   </nav>
+
+  <!-- Mobile menu: native <details> disclosure (accessible, no JS, resets on nav) -->
+  <details class="menu">
+    <summary aria-label="Menu">
+      <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
+    </summary>
+    <nav class="menu-panel" aria-label="Primary">
+      {links.map((l) => <a href={l.href} class:list={['menu-item', { on: l.on }]}>{l.label}</a>)}
+      <a href="/hana-awad-resume.pdf" class="menu-item cv-item" download>Download CV <Icon name="arrow" size={15} /></a>
+    </nav>
+  </details>
 </header>
 
 <style>
@@ -24,6 +40,7 @@ const isActive = (href: string) =>
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
     padding: 14px clamp(16px, 5vw, 40px);
     border-bottom: 1px solid var(--hairline);
     background: color-mix(in srgb, var(--bg) 82%, transparent);
@@ -33,7 +50,10 @@ const isActive = (href: string) =>
     font-family: var(--font-serif);
     font-size: 17px;
     font-weight: 500;
+    white-space: nowrap;
   }
+
+  /* ---- Desktop / tablet inline links ---- */
   .links {
     display: flex;
     align-items: center;
@@ -44,6 +64,7 @@ const isActive = (href: string) =>
     padding: 8px 12px;
     border-radius: 8px;
     color: var(--text-secondary);
+    white-space: nowrap;
     transition: color 0.18s var(--ease-out), background 0.18s var(--ease-out);
   }
   .tab:hover {
@@ -63,18 +84,105 @@ const isActive = (href: string) =>
     border: 1px solid var(--hairline-strong);
     background: var(--panel);
     color: var(--text);
+    white-space: nowrap;
     transition: border-color 0.18s var(--ease-out), transform 0.18s var(--ease-out);
   }
   .cv:hover {
     border-color: var(--accent);
     transform: translateY(-1px);
   }
-  @media (max-width: 460px) {
-    .tab {
-      padding: 8px 9px;
+
+  /* ---- Mobile menu ---- */
+  .menu {
+    display: none;
+    position: relative;
+  }
+  .menu summary {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    border: 1px solid var(--hairline-strong);
+    background: var(--panel);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .menu summary::-webkit-details-marker {
+    display: none;
+  }
+  .bars {
+    display: grid;
+    gap: 4px;
+  }
+  .bars span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--text);
+    transition: transform 0.2s var(--ease-out), opacity 0.2s var(--ease-out);
+  }
+  .menu[open] summary {
+    border-color: var(--accent);
+  }
+  .menu[open] .bars span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .menu[open] .bars span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu[open] .bars span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+  .menu-panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px;
+    border-radius: var(--radius);
+    border: 1px solid var(--hairline-strong);
+    background: var(--panel);
+    box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.7);
+  }
+  .menu-item {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    color: var(--text-secondary);
+  }
+  .menu-item:hover,
+  .menu-item.on {
+    color: var(--text);
+    background: var(--panel-2);
+  }
+  .cv-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    color: var(--text);
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+
+  @media (max-width: 620px) {
+    .links {
+      display: none;
     }
-    .cv {
-      padding: 8px 11px;
+    .menu {
+      display: block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bars span {
+      transition: none;
     }
   }
 </style>
