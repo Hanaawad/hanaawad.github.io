@@ -1,9 +1,10 @@
 name: Deploy site to GitHub Pages
 
-# Builds the Astro site in `site/` and deploys it to GitHub Pages.
-# In the repo's Settings → Pages, set "Build and deployment → Source" to
-# "GitHub Actions" for this workflow to publish. The custom domain
-# hanaawad.com is carried by site/public/CNAME.
+# Builds the Astro site in `site/` and publishes the static output to the
+# `gh-pages` branch, which GitHub Pages serves for this repo. The custom
+# domain hanaawad.com is carried by the CNAME file in the build output
+# (from site/public/CNAME). No repo settings change is required — Pages is
+# already configured to serve from the gh-pages branch.
 
 on:
   push:
@@ -14,48 +15,46 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# Allow one concurrent deployment; don't cancel an in-progress production deploy.
 concurrency:
-  group: pages
+  group: pages-deploy
   cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: site
     steps:
       - uses: actions/checkout@v4
-      - name: Configure GitHub Pages (enable + switch source to Actions)
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
           cache-dependency-path: site/package-lock.json
-      - name: Install dependencies
-        run: npm ci
-      - name: Build (résumé PDF + OG images + Astro)
-        run: npm run build
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: site/dist
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Install dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Build (résumé PDF + OG images + Astro)
+        working-directory: site
+        run: npm run build
+
+      - name: Disable Jekyll (so _astro/ assets are served)
+        run: touch site/dist/.nojekyll
+
+      - name: Publish to gh-pages
+        working-directory: site/dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git init -q
+          git checkout -q -b gh-pages
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              add -A
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -qm "Deploy ${GITHUB_SHA} to Pages"
+          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages:gh-pages
