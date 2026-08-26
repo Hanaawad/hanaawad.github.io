@@ -177,10 +177,12 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
           <h2 class="h2">Key features</h2>
           <div class="features">
             {d.features.map((f) => (
-              <div class="feature">
-                <div class="feature-img">
-                  <Img slug={entry.id} key={f.image} alt={`${d.title} — ${f.title}`} ratio="3/4" sizes="(max-width: 640px) 92vw, 400px" />
-                </div>
+              <div class:list={['feature', { 'feature--noimg': !f.image }]}>
+                {f.image && (
+                  <div class="feature-img">
+                    <Img slug={entry.id} key={f.image} alt={`${d.title} — ${f.title}`} ratio="3/4" sizes="(max-width: 640px) 92vw, 400px" />
+                  </div>
+                )}
                 <div class="feature-txt">
                   <span class="feature-ico">
                     <Icon name={f.icon ?? 'dot'} size={18} />
@@ -512,6 +514,9 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
     border-radius: var(--radius);
     background: var(--panel);
     overflow: hidden;
+  }
+  .feature--noimg .feature-txt {
+    padding-top: 22px;
   }
   .feature-img {
     aspect-ratio: 4 / 5;
