@@ -485,153 +485,154 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
     }
 
     .resume {
-      max-width: 100% !important;
-      margin: 0 !important;
-      padding: 13mm 15mm !important;
-      font-size: 9pt;
+      /* constrain the reading measure so lines aren't uncomfortably long */
+      max-width: 172mm !important;
+      margin: 0 auto !important;
+      padding: 15mm 19mm !important;
+      font-size: 10pt;
     }
 
     /* Header */
     .eyebrow {
-      font-size: 7pt !important;
-      margin: 0 0 5px !important;
+      font-size: 7.5pt !important;
+      margin: 0 0 6px !important;
     }
     .name {
-      font-size: 23pt !important;
-      margin: 0 0 3px !important;
+      font-size: 25pt !important;
+      margin: 0 0 4px !important;
     }
     .head > div > .role {
-      font-size: 10pt !important;
-      margin: 0 0 7px !important;
+      font-size: 11pt !important;
+      margin: 0 0 9px !important;
     }
     .contact {
-      font-size: 7.6pt !important;
-      gap: 4px 12px !important;
+      font-size: 8.4pt !important;
+      gap: 5px 14px !important;
     }
     .contact .c-ico {
-      width: 10px !important;
-      height: 10px !important;
+      width: 11px !important;
+      height: 11px !important;
     }
 
     /* Summary */
     .summary {
-      font-size: 8.6pt !important;
-      line-height: 1.5 !important;
-      margin: 10px 0 0 !important;
+      font-size: 9.6pt !important;
+      line-height: 1.6 !important;
+      margin: 13px 0 0 !important;
     }
 
     /* Section rhythm + headings */
     .block {
-      margin: 15px 0 !important;
+      margin: 20px 0 !important;
       break-inside: avoid;
     }
     .h2 {
-      font-size: 8pt !important;
-      margin: 0 0 9px !important;
-      padding-bottom: 6px !important;
+      font-size: 8.5pt !important;
+      margin: 0 0 12px !important;
+      padding-bottom: 8px !important;
       break-after: avoid;
     }
 
     /* Strengths */
     .strengths {
-      gap: 7px !important;
+      gap: 10px !important;
     }
     .strength {
-      gap: 9px !important;
+      gap: 11px !important;
       break-inside: avoid;
     }
     .strength-ico {
-      width: 22px !important;
-      height: 22px !important;
+      width: 26px !important;
+      height: 26px !important;
     }
     .strength-ico svg {
-      width: 13px !important;
-      height: 13px !important;
+      width: 15px !important;
+      height: 15px !important;
     }
     .strength-text {
-      font-size: 8.4pt !important;
-      line-height: 1.4 !important;
+      font-size: 9.4pt !important;
+      line-height: 1.55 !important;
     }
 
     /* Experience timeline */
     .timeline {
-      gap: 12px !important;
+      gap: 16px !important;
     }
     .job {
-      padding-left: 16px !important;
+      padding-left: 18px !important;
       break-inside: avoid;
     }
     .job::before {
       left: 3px !important;
-      top: 13px !important;
-      bottom: -12px !important;
+      top: 14px !important;
+      bottom: -16px !important;
     }
     .job-dot {
-      width: 7px !important;
-      height: 7px !important;
-      top: 5px !important;
+      width: 8px !important;
+      height: 8px !important;
+      top: 6px !important;
       box-shadow: none !important;
     }
     .job-title {
-      font-size: 10pt !important;
+      font-size: 11pt !important;
     }
     .range {
-      font-size: 7.6pt !important;
+      font-size: 8.2pt !important;
     }
     .place {
-      font-size: 7.8pt !important;
-      margin-top: 2px !important;
+      font-size: 8.6pt !important;
+      margin-top: 3px !important;
     }
     .note {
-      font-size: 7.8pt !important;
-      line-height: 1.4 !important;
+      font-size: 8.6pt !important;
+      line-height: 1.55 !important;
     }
     .bullets {
-      margin-top: 5px !important;
-      gap: 2.5px !important;
-      padding-left: 14px !important;
+      margin-top: 7px !important;
+      gap: 4px !important;
+      padding-left: 15px !important;
     }
     .bullets li {
-      font-size: 8.2pt !important;
-      line-height: 1.4 !important;
+      font-size: 9.2pt !important;
+      line-height: 1.55 !important;
     }
 
     /* Education */
     .items {
-      gap: 9px !important;
+      gap: 12px !important;
     }
     .item {
       break-inside: avoid;
     }
     .item-title {
-      font-size: 9.5pt !important;
+      font-size: 10.5pt !important;
     }
 
     /* Chips (certifications + skills) */
     .chips {
-      gap: 5px !important;
-      margin-top: 6px !important;
+      gap: 6px !important;
+      margin-top: 8px !important;
     }
     .chip {
-      font-size: 7.4pt !important;
-      padding: 2.5px 8px !important;
+      font-size: 8.2pt !important;
+      padding: 3px 10px !important;
     }
     .skills {
-      gap: 9px !important;
+      gap: 12px !important;
     }
     .skill-label {
-      font-size: 8.4pt !important;
+      font-size: 9.2pt !important;
     }
 
     /* Languages */
     .langs {
-      gap: 8px 18px !important;
+      gap: 10px 22px !important;
     }
     .lang-name {
-      font-size: 9.5pt !important;
+      font-size: 10.5pt !important;
     }
     .lang-level {
-      font-size: 7.6pt !important;
+      font-size: 8.2pt !important;
     }
   }
 </style>
