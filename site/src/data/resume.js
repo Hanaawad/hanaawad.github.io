@@ -17,6 +17,34 @@ export const resume = {
   summary:
     'Passionate interface and UX designer with front-end development experience and an architect’s background. I take products from research and information architecture through to designed, shipped interfaces — and, because I also write front-end code, I design with the grain of what’s buildable. Ex-architect from Alexandria, Egypt, now based in Copenhagen.',
 
+  strengths: [
+    {
+      icon: 'flame',
+      label: 'Hard worker',
+      body: 'I take ownership from first research to shipped product, and I follow through.',
+    },
+    {
+      icon: 'messages',
+      label: 'Love to negotiate',
+      body: 'I enjoy finding the middle ground between user needs, business goals, and engineering constraints to reach decisions the team can commit to.',
+    },
+    {
+      icon: 'puzzle',
+      label: 'Problem solver',
+      body: 'I like untangling messy, ambiguous problems and turning them into clear, buildable solutions.',
+    },
+    {
+      icon: 'bulb',
+      label: 'Always curious',
+      body: 'I love learning how things work, and I pick up new tools, domains, and codebases quickly.',
+    },
+    {
+      icon: 'ruler',
+      label: 'Architect’s eye',
+      body: 'A background in structure, proportion, and detail that shapes how I approach UX and information.',
+    },
+  ],
+
   experience: [
     {
       role: 'Senior UX Designer Lead',
@@ -191,10 +219,15 @@ export const resume = {
       'Autodesk Revit 2D/3D',
       'Autodesk 3D-MAX',
       'SketchUp',
-      'CAD',
-      'Rendering',
+      'AutoCAD',
+      '3D visualisation & rendering',
+      'Schematic design',
+      'Technical drawing',
       'Design research',
       'Project planning',
+      'Parametric design',
+      'Sustainable design',
+      'Spatial & systems thinking',
     ],
     'Ways of working': [
       'Agile / Scrum',
