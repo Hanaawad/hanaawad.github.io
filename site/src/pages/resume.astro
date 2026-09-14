@@ -2,8 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import { resume as r } from '../data/resume.js';
+import { PDF_HREF } from '../lib/pdf.ts';
 
-const PDF = '/hana-awad-resume.pdf';
+const PDF = PDF_HREF;
 const dateRange = (e: { date?: string; start?: string; end?: string }) =>
   e.date ?? [e.start, e.end].filter(Boolean).join(' – ');
 ---

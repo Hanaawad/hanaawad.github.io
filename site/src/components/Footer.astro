@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { resume } from '../data/resume.js';
+import { PDF_HREF } from '../lib/pdf.ts';
 
 const studies = (await getCollection('caseStudies'))
   .filter((s) => !s.data.hidden)
@@ -13,7 +14,7 @@ const explore = [
   { href: '/about', label: 'About' },
   { href: '/hobbies', label: 'Hobbies' },
   { href: '/resume', label: 'Résumé' },
-  { href: '/hana-awad-resume.pdf', label: 'Download CV', download: true },
+  { href: PDF_HREF, label: 'Download CV', download: true },
 ];
 ---
 
