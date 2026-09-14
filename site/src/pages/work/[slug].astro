@@ -139,9 +139,11 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
               <span class="method">{m}</span>
             ))}
           </div>
-          <div class="process-img">
-            <Img slug={entry.id} key={d.processImage} alt={`${d.title} — UX process`} sizes="(max-width: 860px) 92vw, 820px" />
-          </div>
+          {d.processImage && (
+            <div class="process-img">
+              <Img slug={entry.id} key={d.processImage} alt={`${d.title} — UX process`} sizes="(max-width: 860px) 92vw, 820px" />
+            </div>
+          )}
           {d.processCaption && <p class="caption">{d.processCaption}</p>}
         </section>
       )
@@ -153,9 +155,11 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
         <section class="block reveal">
           <h2 class="h2">{d.insightHeading}</h2>
           <p class="body">{d.insight}</p>
-          <div class="process-img">
-            <Img slug={entry.id} key={d.insightImage} alt={`${d.title} — ${d.insightHeading}`} sizes="(max-width: 860px) 92vw, 820px" />
-          </div>
+          {d.insightImage && (
+            <div class="process-img">
+              <Img slug={entry.id} key={d.insightImage} alt={`${d.title} — ${d.insightHeading}`} sizes="(max-width: 860px) 92vw, 820px" />
+            </div>
+          )}
         </section>
       )
     }
