@@ -66,10 +66,10 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
       <div class="timeline">
         {
           r.experience.map((e) => (
-            <article class="role">
-              <span class="role-dot" aria-hidden="true" />
-              <div class="role-head">
-                <h3 class="role-title">{e.role}</h3>
+            <article class="job">
+              <span class="job-dot" aria-hidden="true" />
+              <div class="job-head">
+                <h3 class="job-title">{e.role}</h3>
                 <span class="range">{dateRange(e)}</span>
               </div>
               <p class="place">
@@ -306,11 +306,11 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
     display: grid;
     gap: 2.4rem;
   }
-  .role {
+  .job {
     position: relative;
     padding-left: 26px;
   }
-  .role::before {
+  .job::before {
     content: '';
     position: absolute;
     left: 4px;
@@ -319,10 +319,10 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
     width: 1px;
     background: #1c1c22;
   }
-  .role:last-child::before {
+  .job:last-child::before {
     display: none;
   }
-  .role-dot {
+  .job-dot {
     position: absolute;
     left: 0;
     top: 7px;
@@ -332,13 +332,13 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
     background: var(--accent);
     box-shadow: 0 0 9px 1px var(--accent);
   }
-  .role-head {
+  .job-head {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: 16px;
   }
-  .role-title {
+  .job-title {
     font-size: 18px;
     font-family: var(--font-serif);
     font-weight: 500;
@@ -447,9 +447,192 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
 
   @media (max-width: 560px) {
     .item-head,
-    .role-head {
+    .job-head {
       flex-direction: column;
       gap: 2px;
+    }
+  }
+</style>
+
+<!--
+  Print / PDF theme. Compacts the on-screen résumé to a readable A4 document
+  (same dark design, timeline and chips — just sized for paper) and drops the
+  site chrome + download buttons. Used both by the browser's Print dialog and by
+  the headless-Chromium PDF renderer (scripts/build-resume-pdf.mjs).
+-->
+<style is:global>
+  @media print {
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    html,
+    body {
+      background: #0e0e10 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    header.nav,
+    footer.foot,
+    .download,
+    .foot-cta {
+      display: none !important;
+    }
+    /* reveal-on-scroll elements must be visible on paper */
+    .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .resume {
+      /* constrain the reading measure so lines aren't uncomfortably long */
+      max-width: 172mm !important;
+      margin: 0 auto !important;
+      padding: 15mm 19mm !important;
+      font-size: 10pt;
+    }
+
+    /* Header */
+    .eyebrow {
+      font-size: 7.5pt !important;
+      margin: 0 0 6px !important;
+    }
+    .name {
+      font-size: 25pt !important;
+      margin: 0 0 4px !important;
+    }
+    .head > div > .role {
+      font-size: 11pt !important;
+      margin: 0 0 9px !important;
+    }
+    .contact {
+      font-size: 8.4pt !important;
+      gap: 5px 14px !important;
+    }
+    .contact .c-ico {
+      width: 11px !important;
+      height: 11px !important;
+    }
+
+    /* Summary */
+    .summary {
+      font-size: 9.6pt !important;
+      line-height: 1.6 !important;
+      margin: 13px 0 0 !important;
+    }
+
+    /* Section rhythm + headings */
+    .block {
+      margin: 20px 0 !important;
+      break-inside: avoid;
+    }
+    .h2 {
+      font-size: 8.5pt !important;
+      margin: 0 0 12px !important;
+      padding-bottom: 8px !important;
+      break-after: avoid;
+    }
+
+    /* Strengths */
+    .strengths {
+      gap: 10px !important;
+    }
+    .strength {
+      gap: 11px !important;
+      break-inside: avoid;
+    }
+    .strength-ico {
+      width: 26px !important;
+      height: 26px !important;
+    }
+    .strength-ico svg {
+      width: 15px !important;
+      height: 15px !important;
+    }
+    .strength-text {
+      font-size: 9.4pt !important;
+      line-height: 1.55 !important;
+    }
+
+    /* Experience timeline */
+    .timeline {
+      gap: 16px !important;
+    }
+    .job {
+      padding-left: 18px !important;
+      break-inside: avoid;
+    }
+    .job::before {
+      left: 3px !important;
+      top: 14px !important;
+      bottom: -16px !important;
+    }
+    .job-dot {
+      width: 8px !important;
+      height: 8px !important;
+      top: 6px !important;
+      box-shadow: none !important;
+    }
+    .job-title {
+      font-size: 11pt !important;
+    }
+    .range {
+      font-size: 8.2pt !important;
+    }
+    .place {
+      font-size: 8.6pt !important;
+      margin-top: 3px !important;
+    }
+    .note {
+      font-size: 8.6pt !important;
+      line-height: 1.55 !important;
+    }
+    .bullets {
+      margin-top: 7px !important;
+      gap: 4px !important;
+      padding-left: 15px !important;
+    }
+    .bullets li {
+      font-size: 9.2pt !important;
+      line-height: 1.55 !important;
+    }
+
+    /* Education */
+    .items {
+      gap: 12px !important;
+    }
+    .item {
+      break-inside: avoid;
+    }
+    .item-title {
+      font-size: 10.5pt !important;
+    }
+
+    /* Chips (certifications + skills) */
+    .chips {
+      gap: 6px !important;
+      margin-top: 8px !important;
+    }
+    .chip {
+      font-size: 8.2pt !important;
+      padding: 3px 10px !important;
+    }
+    .skills {
+      gap: 12px !important;
+    }
+    .skill-label {
+      font-size: 9.2pt !important;
+    }
+
+    /* Languages */
+    .langs {
+      gap: 10px 22px !important;
+    }
+    .lang-name {
+      font-size: 10.5pt !important;
+    }
+    .lang-level {
+      font-size: 8.2pt !important;
     }
   }
 </style>
