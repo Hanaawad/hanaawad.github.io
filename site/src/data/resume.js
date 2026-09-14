@@ -53,6 +53,7 @@ export const resume = {
       end: 'Present',
       location: 'Copenhagen, Denmark',
       bullets: [
+        'Led the end-to-end UX for Lightboks, SOUNDBOKS’s first light and a new product category — from concept, research and the colour and control systems through to the shipped companion app, validated through internal, external and real-world party testing.',
         'Translate insights and business requirements into product design concepts and intuitive end-to-end experiences.',
         'Lead UX design strategy from start to finish — deep research, creative ideation, and tackling design-strategy and information-architecture challenges across the whole UX journey.',
         'Develop user-centric brand experiences across online shops, digital products, and services; build customer journeys, sketches and wireframes.',
