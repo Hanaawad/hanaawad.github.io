@@ -1,157 +1,112 @@
-// Generate an ATS-friendly PDF résumé from the shared data
-// (src/data/resume.js) into public/hana-awad-resume.pdf. Real selectable text,
-// standard section headings, single column, standard fonts — parseable by ATS.
+// Generate the downloadable résumé PDF as a pixel-faithful render of the live
+// résumé page (src/pages/resume.astro) so the PDF looks EXACTLY like
+// hanaawad.com/resume — same dark theme, type, timeline and sections — minus
+// the site chrome (nav, footer) and the on-page download buttons.
 //
-// Runs as part of `npm run build` (see package.json) and can be run directly:
-//   node scripts/build-resume-pdf.mjs
-import PDFDocument from 'pdfkit';
-import { createWriteStream, mkdirSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
+// It renders the already-built page in dist/ with headless Chromium, so run it
+// AFTER `astro build`:
+//   npm run build && npm run pdf
+//
+// Chromium: uses $CHROMIUM_PATH if set, else the Playwright-managed binary.
+// Output: public/hana-awad-resume.pdf  (a committed, deploy-ready asset).
+import { chromium } from 'playwright-core';
+import { createServer } from 'node:http';
+import { createReadStream, existsSync, statSync } from 'node:fs';
+import { resolve, dirname, join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { resume as r } from '../src/data/resume.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const DIST = resolve(__dirname, '../dist');
 const OUT = resolve(__dirname, '../public/hana-awad-resume.pdf');
-mkdirSync(dirname(OUT), { recursive: true });
 
-const M = 54; // page margin
-// Dark theme to match the site (hanaawad.com/resume). Text stays real/selectable.
-const BG = '#0e0e10';
-const INK = '#f4f4f5';
-const MUTE = '#a1a1aa';
-const ACCENT = '#e0794a';
-const RULE = '#2a2a30';
+if (!existsSync(join(DIST, 'resume', 'index.html'))) {
+  console.error('dist/resume/index.html not found — run `astro build` first (npm run build).');
+  process.exit(1);
+}
 
-const doc = new PDFDocument({
-  size: 'A4',
-  margins: { top: M, bottom: M, left: M, right: M },
-  info: {
-    Title: `${r.name} — Résumé`,
-    Author: r.name,
-    Subject: r.title,
-    Keywords: 'UX designer, front-end, resume, CV',
-  },
+// Candidate Chromium executables (this environment ships a headless shell).
+const CHROMIUM_CANDIDATES = [
+  process.env.CHROMIUM_PATH,
+  '/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell',
+  '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
+].filter(Boolean);
+const execPath = CHROMIUM_CANDIDATES.find((p) => existsSync(p));
+
+const MIME = {
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.woff2': 'font/woff2',
+  '.woff': 'font/woff',
+  '.ttf': 'font/ttf',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  '.avif': 'image/avif',
+  '.json': 'application/json',
+  '.xml': 'application/xml',
+  '.pdf': 'application/pdf',
+};
+
+// Minimal static server for the built site (directory URLs -> index.html).
+function resolvePath(urlPath) {
+  let p = decodeURIComponent(urlPath.split('?')[0]);
+  let fsPath = join(DIST, p);
+  if (existsSync(fsPath) && statSync(fsPath).isDirectory()) fsPath = join(fsPath, 'index.html');
+  else if (!existsSync(fsPath) && existsSync(fsPath + '.html')) fsPath += '.html';
+  else if (!existsSync(fsPath) && existsSync(join(fsPath, 'index.html')))
+    fsPath = join(fsPath, 'index.html');
+  return fsPath;
+}
+const server = createServer((req, res) => {
+  const fsPath = resolvePath(req.url);
+  if (!existsSync(fsPath) || statSync(fsPath).isDirectory()) {
+    res.writeHead(404);
+    res.end('not found');
+    return;
+  }
+  res.writeHead(200, { 'content-type': MIME[extname(fsPath)] ?? 'application/octet-stream' });
+  createReadStream(fsPath).pipe(res);
 });
-doc.pipe(createWriteStream(OUT));
 
-const W = doc.page.width - M * 2;
-const dateRange = (e) => e.date ?? [e.start, e.end].filter(Boolean).join(' – ');
+// CSS to drop site chrome and the download buttons, and to paginate cleanly.
+const PRINT_CSS = `
+  header.nav, footer.foot, .download, .foot-cta { display: none !important; }
+  html, body { background: #0e0e10 !important; }
+  .resume { max-width: 660px !important; margin: 0 auto !important;
+            padding: 30px clamp(16px, 5vw, 40px) 30px !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .block, .role, .strength, .item, .item-head, .role-head { break-inside: avoid; }
+  .h2 { break-after: avoid; }
+  @page { margin: 0; size: A4; }
+`;
 
-// Paint the dark background behind every page (does not move the text cursor).
-function paintBg() {
-  doc.save();
-  doc.rect(0, 0, doc.page.width, doc.page.height).fill(BG);
-  doc.restore();
-  doc.fillColor(INK);
+const port = await new Promise((res) => {
+  server.listen(0, '127.0.0.1', () => res(server.address().port));
+});
+
+const browser = await chromium.launch({
+  executablePath: execPath,
+  headless: true,
+  args: ['--no-sandbox'],
+});
+try {
+  const page = await browser.newPage();
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await page.goto(`http://127.0.0.1:${port}/resume/`, { waitUntil: 'networkidle' });
+  await page.addStyleTag({ content: PRINT_CSS });
+  await page.evaluate(() => document.fonts.ready);
+  await page.pdf({
+    path: OUT,
+    format: 'A4',
+    printBackground: true,
+    preferCSSPageSize: true,
+    margin: { top: 0, bottom: 0, left: 0, right: 0 },
+  });
+  console.log('Résumé PDF (page render) written to', OUT);
+} finally {
+  await browser.close();
+  server.close();
 }
-paintBg();
-doc.on('pageAdded', paintBg);
-
-function rule() {
-  doc
-    .moveTo(M, doc.y)
-    .lineTo(M + W, doc.y)
-    .lineWidth(0.6)
-    .strokeColor(RULE)
-    .stroke();
-  doc.moveDown(0.5);
-}
-
-function sectionHeading(label) {
-  if (doc.y > doc.page.height - 120) doc.addPage();
-  doc.moveDown(0.7);
-  doc.font('Helvetica-Bold').fontSize(11).fillColor(ACCENT).text(label.toUpperCase());
-  doc.moveDown(0.25);
-  rule();
-}
-
-// ---- Header ------------------------------------------------------------
-doc.font('Helvetica-Bold').fontSize(24).fillColor(INK).text(r.name);
-doc.font('Helvetica').fontSize(12).fillColor(MUTE).text(r.title);
-doc.moveDown(0.3);
-const contact = [r.location, r.email, r.phone, r.links.site, r.links.linkedin]
-  .filter(Boolean)
-  .join('  ·  ');
-doc.fontSize(9).fillColor(MUTE).text(contact);
-doc.moveDown(0.5);
-rule();
-
-// ---- Summary -----------------------------------------------------------
-doc.font('Helvetica').fontSize(10).fillColor(INK).text(r.summary, { align: 'left', lineGap: 1.5 });
-
-// ---- Strengths & working style ----------------------------------------
-if (r.strengths?.length) {
-  sectionHeading('Strengths & Working Style');
-  for (const s of r.strengths) {
-    if (doc.y > doc.page.height - 80) doc.addPage();
-    doc.font('Helvetica-Bold').fontSize(9.5).fillColor(INK).text(`•  ${s.label} `, M, doc.y, {
-      width: W,
-      continued: true,
-    });
-    doc.font('Helvetica').fillColor(MUTE).text(`— ${s.body}`, { width: W, lineGap: 1 });
-    doc.moveDown(0.25);
-  }
-}
-
-// ---- Experience --------------------------------------------------------
-sectionHeading('Experience');
-for (const e of r.experience) {
-  if (doc.y > doc.page.height - 110) doc.addPage();
-  const rangeText = dateRange(e);
-  const rangeWidth = 140;
-  const y0 = doc.y;
-  doc.font('Helvetica-Bold').fontSize(10.5).fillColor(INK).text(`${e.role} — ${e.org}`, M, y0, { width: W - rangeWidth - 12 });
-  const afterRoleY = doc.y;
-  doc.font('Helvetica').fontSize(9).fillColor(MUTE).text(rangeText, M + W - rangeWidth, y0 + 1, { width: rangeWidth, align: 'right' });
-  doc.x = M;
-  doc.y = afterRoleY; // restore flow to the end of the (possibly wrapped) title
-  doc.font('Helvetica-Oblique').fontSize(9).fillColor(MUTE).text(e.location, M, doc.y, { width: W });
-  doc.moveDown(0.2);
-  doc.font('Helvetica').fontSize(9.5).fillColor(INK);
-  for (const b of e.bullets) {
-    doc.text(`•  ${b}`, M, doc.y, { width: W, indent: 8, lineGap: 1, paragraphGap: 1.5 });
-  }
-  doc.moveDown(0.5);
-}
-
-// ---- Education ---------------------------------------------------------
-sectionHeading('Education');
-for (const e of r.education) {
-  if (doc.y > doc.page.height - 90) doc.addPage();
-  const rangeText = dateRange(e);
-  const rangeWidth = 140;
-  const y0 = doc.y;
-  doc.font('Helvetica-Bold').fontSize(10).fillColor(INK).text(e.title, M, y0, { width: W - rangeWidth - 12 });
-  const afterTitleY = doc.y;
-  doc.font('Helvetica').fontSize(9).fillColor(MUTE).text(rangeText, M + W - rangeWidth, y0 + 1, { width: rangeWidth, align: 'right' });
-  doc.x = M;
-  doc.y = afterTitleY;
-  doc.font('Helvetica').fontSize(9.5).fillColor(MUTE).text(`${e.org} · ${e.location}`, M, doc.y, { width: W });
-  if (e.note) doc.font('Helvetica').fontSize(9).fillColor(INK).text(e.note, M, doc.y, { width: W, lineGap: 1 });
-  doc.moveDown(0.45);
-}
-
-// ---- Certifications ----------------------------------------------------
-sectionHeading('Certifications');
-doc.font('Helvetica-Bold').fontSize(9.5).fillColor(INK).text(`${r.certifications.org} `, { continued: true });
-doc.font('Helvetica').fillColor(MUTE).text(`(${r.certifications.date})`);
-doc.font('Helvetica').fontSize(9.5).fillColor(INK).text(r.certifications.items.join(' · '), { lineGap: 1 });
-
-// ---- Skills ------------------------------------------------------------
-sectionHeading('Skills');
-for (const [group, items] of Object.entries(r.skills)) {
-  if (doc.y > doc.page.height - 70) doc.addPage();
-  const y0 = doc.y;
-  doc.font('Helvetica-Bold').fontSize(9.5).fillColor(INK).text(`${group}: `, M, y0, { continued: true });
-  doc.font('Helvetica').fillColor(MUTE).text(items.join(', '), { lineGap: 1 });
-  doc.moveDown(0.2);
-}
-
-// ---- Languages ---------------------------------------------------------
-sectionHeading('Languages');
-doc.font('Helvetica').fontSize(9.5).fillColor(INK).text(
-  r.languages.map((l) => `${l.name} (${l.level})`).join('   ·   '),
-);
-
-doc.end();
-console.log('Résumé PDF written to', OUT);

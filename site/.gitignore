@@ -1,7 +1,10 @@
 # build output
 dist/
+# NOTE: public/hana-awad-resume.pdf is committed. It is a page-accurate render
+# of /resume produced by `npm run build && npm run pdf` (needs Chromium, which
+# CI does not have), so it ships as a static asset rather than being generated
+# in CI. Regenerate and commit it whenever the résumé content or design changes.
 # generated build artifacts (produced by `npm run build`)
-public/hana-awad-resume.pdf
 public/og/
 # generated types
 .astro/
