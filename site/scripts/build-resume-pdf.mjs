@@ -69,13 +69,29 @@ function sectionHeading(label) {
 doc.font('Helvetica-Bold').fontSize(24).fillColor(INK).text(r.name);
 doc.font('Helvetica').fontSize(12).fillColor(MUTE).text(r.title);
 doc.moveDown(0.3);
-const contact = [r.location, r.email, r.phone, r.links.linkedin].filter(Boolean).join('  ·  ');
+const contact = [r.location, r.email, r.phone, r.links.site, r.links.linkedin]
+  .filter(Boolean)
+  .join('  ·  ');
 doc.fontSize(9).fillColor(MUTE).text(contact);
 doc.moveDown(0.5);
 rule();
 
 // ---- Summary -----------------------------------------------------------
 doc.font('Helvetica').fontSize(10).fillColor(INK).text(r.summary, { align: 'left', lineGap: 1.5 });
+
+// ---- Strengths & working style ----------------------------------------
+if (r.strengths?.length) {
+  sectionHeading('Strengths & Working Style');
+  for (const s of r.strengths) {
+    if (doc.y > doc.page.height - 80) doc.addPage();
+    doc.font('Helvetica-Bold').fontSize(9.5).fillColor(INK).text(`•  ${s.label} `, M, doc.y, {
+      width: W,
+      continued: true,
+    });
+    doc.font('Helvetica').fillColor(MUTE).text(`— ${s.body}`, { width: W, lineGap: 1 });
+    doc.moveDown(0.25);
+  }
+}
 
 // ---- Experience --------------------------------------------------------
 sectionHeading('Experience');
