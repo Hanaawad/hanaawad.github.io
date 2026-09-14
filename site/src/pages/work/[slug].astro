@@ -39,9 +39,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
     <!-- HERO -->
     <section class="hero reveal">
       <p class="eyebrow">{metaLine}</p>
-      <h1 class="title" transition:name={`cs-title-${entry.id}`}>
-        <span class="headline-gradient">{d.title}</span>
-      </h1>
+      <h1 class="title" transition:name={`cs-title-${entry.id}`}>{d.title}</h1>
       <p class="summary">{d.summary}</p>
       {
         d.links.length > 0 && (
@@ -139,9 +137,11 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
               <span class="method">{m}</span>
             ))}
           </div>
-          <div class="process-img">
-            <Img slug={entry.id} key={d.processImage} alt={`${d.title} — UX process`} sizes="(max-width: 860px) 92vw, 820px" />
-          </div>
+          {d.processImage && (
+            <div class="process-img">
+              <Img slug={entry.id} key={d.processImage} alt={`${d.title} — UX process`} sizes="(max-width: 860px) 92vw, 820px" />
+            </div>
+          )}
           {d.processCaption && <p class="caption">{d.processCaption}</p>}
         </section>
       )
@@ -153,9 +153,11 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
         <section class="block reveal">
           <h2 class="h2">{d.insightHeading}</h2>
           <p class="body">{d.insight}</p>
-          <div class="process-img">
-            <Img slug={entry.id} key={d.insightImage} alt={`${d.title} — ${d.insightHeading}`} sizes="(max-width: 860px) 92vw, 820px" />
-          </div>
+          {d.insightImage && (
+            <div class="process-img">
+              <Img slug={entry.id} key={d.insightImage} alt={`${d.title} — ${d.insightHeading}`} sizes="(max-width: 860px) 92vw, 820px" />
+            </div>
+          )}
         </section>
       )
     }
@@ -201,7 +203,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
     {
       d.gallery.length > 0 && (
         <section class="block reveal">
-          <h2 class="h2">Screens</h2>
+          <h2 class="h2">Gallery</h2>
           <div class="gallery">
             {d.gallery.map((s) => (
               <figure class="shot">
@@ -288,6 +290,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
   .title {
     font-size: clamp(40px, 8vw, 72px);
     letter-spacing: -0.02em;
+    color: var(--text);
     margin: 0 0 22px;
   }
   .summary {
@@ -469,7 +472,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
   /* DECISION */
   .decision {
     margin: 64px 0;
-    padding: clamp(24px, 5vw, 40px);
+    padding: clamp(28px, 5vw, 48px);
     border-radius: var(--radius-lg);
     border: 1px solid color-mix(in srgb, var(--glow) 30%, var(--hairline));
     background:
@@ -480,24 +483,30 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
     display: inline-flex;
     align-items: center;
     gap: 9px;
-    font-size: 13px;
+    font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     color: var(--glow);
-    margin-bottom: 14px;
+    padding: 6px 12px 6px 10px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--glow) 26%, transparent);
+    background: color-mix(in srgb, var(--glow) 10%, transparent);
+    margin-bottom: 22px;
   }
   .decision-kicker .dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: var(--glow);
-    box-shadow: 0 0 10px 1px var(--glow);
+    box-shadow: 0 0 8px 1px var(--glow);
+    flex: none;
   }
   .decision-body {
     font-family: var(--font-serif);
     font-size: clamp(21px, 3.4vw, 28px);
-    line-height: 1.45;
+    line-height: 1.5;
     color: var(--text);
+    max-width: 54ch;
     margin: 0;
   }
 
