@@ -464,6 +464,10 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
   @media print {
     @page {
       size: A4;
+      /* full-bleed: margins must be 0 so the dark background reaches the paper
+         edges (Chromium never paints the @page margin strips). Per-page top
+         breathing room is added as padding on the entries below, which — unlike
+         margins — is preserved when an entry starts at the top of a page. */
       margin: 0;
     }
     html,
@@ -485,10 +489,10 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
     }
 
     .resume {
-      /* constrain the reading measure so lines aren't uncomfortably long */
-      max-width: 172mm !important;
-      margin: 0 auto !important;
-      padding: 15mm 19mm !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      /* side + first/last page insets (full-bleed dark behind) */
+      padding: 13mm 18mm 15mm !important;
       font-size: 10pt;
     }
 
@@ -521,9 +525,16 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
       margin: 13px 0 0 !important;
     }
 
-    /* Section rhythm + headings */
+    /* Section rhythm + headings — spacing as top padding (survives page tops,
+       unlike margins which Chromium truncates at a page break) so a section
+       heading landing on a new page still gets breathing room. */
     .block {
-      margin: 20px 0 !important;
+      margin: 0 !important;
+      padding-top: 22px !important;
+    }
+    /* the small Certifications section (a block with chips directly inside)
+       stays whole rather than splitting a chip row across a page break */
+    .block:has(> .chips) {
       break-inside: avoid;
     }
     .h2 {
@@ -554,23 +565,23 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
       line-height: 1.55 !important;
     }
 
-    /* Experience timeline */
+    /* Experience — spacing lives on each entry as padding-top (preserved when
+       an entry starts a new page); the connector line is dropped for print. */
     .timeline {
-      gap: 16px !important;
+      gap: 0 !important;
     }
     .job {
       padding-left: 18px !important;
+      padding-top: 20px !important;
       break-inside: avoid;
     }
     .job::before {
-      left: 3px !important;
-      top: 14px !important;
-      bottom: -16px !important;
+      display: none !important;
     }
     .job-dot {
       width: 8px !important;
       height: 8px !important;
-      top: 6px !important;
+      top: 26px !important;
       box-shadow: none !important;
     }
     .job-title {
@@ -599,19 +610,26 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
 
     /* Education */
     .items {
-      gap: 12px !important;
+      gap: 0 !important;
     }
     .item {
+      padding-top: 13px !important;
       break-inside: avoid;
     }
     .item-title {
       font-size: 10.5pt !important;
+    }
+    /* Skills groups also get top padding so a group starting a page has room */
+    .skill-group {
+      padding-top: 8px;
+      break-inside: avoid;
     }
 
     /* Chips (certifications + skills) */
     .chips {
       gap: 6px !important;
       margin-top: 8px !important;
+      break-inside: avoid; /* don't split a chip cluster across pages */
     }
     .chip {
       font-size: 8.2pt !important;
