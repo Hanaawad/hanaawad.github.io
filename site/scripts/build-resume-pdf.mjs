@@ -71,18 +71,6 @@ const server = createServer((req, res) => {
   createReadStream(fsPath).pipe(res);
 });
 
-// CSS to drop site chrome and the download buttons, and to paginate cleanly.
-const PRINT_CSS = `
-  header.nav, footer.foot, .download, .foot-cta { display: none !important; }
-  html, body { background: #0e0e10 !important; }
-  .resume { max-width: 660px !important; margin: 0 auto !important;
-            padding: 30px clamp(16px, 5vw, 40px) 30px !important; }
-  .reveal { opacity: 1 !important; transform: none !important; }
-  .block, .role, .strength, .item, .item-head, .role-head { break-inside: avoid; }
-  .h2 { break-after: avoid; }
-  @page { margin: 0; size: A4; }
-`;
-
 const port = await new Promise((res) => {
   server.listen(0, '127.0.0.1', () => res(server.address().port));
 });
@@ -94,9 +82,9 @@ const browser = await chromium.launch({
 });
 try {
   const page = await browser.newPage();
-  await page.emulateMedia({ colorScheme: 'dark' });
+  // Render using the page's own @media print theme (compact A4, dark, no chrome).
+  await page.emulateMedia({ media: 'print', colorScheme: 'dark' });
   await page.goto(`http://127.0.0.1:${port}/resume/`, { waitUntil: 'networkidle' });
-  await page.addStyleTag({ content: PRINT_CSS });
   await page.evaluate(() => document.fonts.ready);
   await page.pdf({
     path: OUT,
