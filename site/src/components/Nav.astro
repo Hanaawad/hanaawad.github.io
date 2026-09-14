@@ -17,7 +17,9 @@ const links = [
   <!-- Desktop / tablet inline nav -->
   <nav class="links" aria-label="Primary">
     {links.map((l) => <a href={l.href} class:list={['tab', { on: l.on }]}>{l.label}</a>)}
-    <a href="/hana-awad-resume.pdf" class="cv" download>CV <Icon name="arrow" size={14} /></a>
+    <a href="/hana-awad-resume.pdf" class="cv" download>
+      <Icon name="arrow" size={14} class="dl-arrow" /> Download PDF
+    </a>
   </nav>
 
   <!-- Mobile menu: native <details> disclosure (accessible, no JS, resets on nav) -->
@@ -27,7 +29,9 @@ const links = [
     </summary>
     <nav class="menu-panel" aria-label="Primary">
       {links.map((l) => <a href={l.href} class:list={['menu-item', { on: l.on }]}>{l.label}</a>)}
-      <a href="/hana-awad-resume.pdf" class="menu-item cv-item" download>Download CV <Icon name="arrow" size={15} /></a>
+      <a href="/hana-awad-resume.pdf" class="menu-item cv-item" download>
+        <Icon name="arrow" size={15} class="dl-arrow" /> Download PDF
+      </a>
     </nav>
   </details>
 </header>
@@ -77,19 +81,23 @@ const links = [
   .cv {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     margin-left: 6px;
-    padding: 8px 14px;
+    padding: 10px 16px;
     border-radius: 999px;
     border: 1px solid var(--hairline-strong);
     background: var(--panel);
     color: var(--text);
     white-space: nowrap;
-    transition: border-color 0.18s var(--ease-out), transform 0.18s var(--ease-out);
+    transition: border-color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+  }
+  .cv :global(.dl-arrow) {
+    transform: rotate(90deg);
+    color: var(--accent);
   }
   .cv:hover {
     border-color: var(--accent);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 
   /* ---- Mobile menu ---- */
@@ -169,6 +177,10 @@ const links = [
     margin-top: 4px;
     color: var(--text);
     background: color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+  .cv-item :global(.dl-arrow) {
+    transform: rotate(90deg);
+    color: var(--accent);
   }
 
   @media (max-width: 620px) {
