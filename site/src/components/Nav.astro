@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { PDF_HREF } from '../lib/pdf.ts';
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path.startsWith(href);
@@ -17,7 +18,7 @@ const links = [
   <!-- Desktop / tablet inline nav -->
   <nav class="links" aria-label="Primary">
     {links.map((l) => <a href={l.href} class:list={['tab', { on: l.on }]}>{l.label}</a>)}
-    <a href="/hana-awad-resume.pdf" class="cv" download>
+    <a href={PDF_HREF} class="cv" download>
       <Icon name="arrow" size={14} class="dl-arrow" /> Download PDF
     </a>
   </nav>
@@ -29,7 +30,7 @@ const links = [
     </summary>
     <nav class="menu-panel" aria-label="Primary">
       {links.map((l) => <a href={l.href} class:list={['menu-item', { on: l.on }]}>{l.label}</a>)}
-      <a href="/hana-awad-resume.pdf" class="menu-item cv-item" download>
+      <a href={PDF_HREF} class="menu-item cv-item" download>
         <Icon name="arrow" size={15} class="dl-arrow" /> Download PDF
       </a>
     </nav>
