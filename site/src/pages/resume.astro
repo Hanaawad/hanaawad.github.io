@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import { Image } from 'astro:assets';
+import portrait from '../assets/portrait.webp';
 import { resume as r } from '../data/resume.js';
 import { PDF_HREF } from '../lib/pdf.ts';
 
@@ -15,10 +17,14 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
 >
   <div class="resume">
     <header class="head">
-      <div>
-        <p class="eyebrow">Résumé</p>
-        <h1 class="name"><span class="headline-gradient">{r.name}</span></h1>
-        <p class="role">{r.title}</p>
+      <div class="head-main">
+        <div class="avatar">
+          <Image src={portrait} alt={r.name} width={240} height={240} />
+        </div>
+        <div>
+          <p class="eyebrow">Résumé</p>
+          <h1 class="name"><span class="headline-gradient">{r.name}</span></h1>
+          <p class="role">{r.title}</p>
         <p class="contact">
           <span class="loc">{r.location}</span>
           <a class="c-link" href={`mailto:${r.email}`}>
@@ -34,6 +40,7 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
             <Icon name="external" size={14} class="c-ico" />LinkedIn
           </a>
         </p>
+        </div>
       </div>
       <a class="download" href={PDF} download>
         <Icon name="arrow" size={16} class="dl-arrow" /> Download PDF
@@ -165,6 +172,35 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
     justify-content: space-between;
     gap: 24px;
     flex-wrap: wrap;
+  }
+  .head-main {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .avatar {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex: none;
+    border: 1px solid var(--hairline-strong);
+    background: var(--panel);
+  }
+  .avatar :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  @media (max-width: 480px) {
+    .avatar {
+      width: 84px;
+      height: 84px;
+    }
+    .head-main {
+      gap: 16px;
+    }
   }
   .eyebrow {
     font-size: 13px;
