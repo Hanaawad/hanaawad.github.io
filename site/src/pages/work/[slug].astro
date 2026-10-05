@@ -28,7 +28,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
 ---
 
 <BaseLayout
-  title={`${d.title} — Hana Awad`}
+  title={`${d.title} · Hana Awad`}
   description={d.summary}
   glow={d.glow}
   ogImage={`/og/${entry.id}.png`}
@@ -60,7 +60,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
       <Img
         slug={entry.id}
         key="hero"
-        alt={`${d.title} — hero`}
+        alt={`${d.title} hero`}
         priority={true}
         sizes="(max-width: 860px) 92vw, 820px"
       />
@@ -139,7 +139,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
           </div>
           {d.processImage && (
             <div class="process-img">
-              <Img slug={entry.id} key={d.processImage} alt={`${d.title} — UX process`} sizes="(max-width: 860px) 92vw, 820px" />
+              <Img slug={entry.id} key={d.processImage} alt={`${d.title} · UX process`} sizes="(max-width: 860px) 92vw, 820px" />
             </div>
           )}
           {d.processCaption && <p class="caption">{d.processCaption}</p>}
@@ -155,7 +155,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
           <p class="body">{d.insight}</p>
           {d.insightImage && (
             <div class="process-img">
-              <Img slug={entry.id} key={d.insightImage} alt={`${d.title} — ${d.insightHeading}`} sizes="(max-width: 860px) 92vw, 820px" />
+              <Img slug={entry.id} key={d.insightImage} alt={`${d.title} · ${d.insightHeading}`} sizes="(max-width: 860px) 92vw, 820px" />
             </div>
           )}
         </section>
@@ -182,7 +182,7 @@ const metaLine = [d.client, d.role, d.year].filter(Boolean).join(' · ');
               <div class:list={['feature', { 'feature--noimg': !f.image }]}>
                 {f.image && (
                   <div class="feature-img">
-                    <Img slug={entry.id} key={f.image} alt={`${d.title} — ${f.title}`} ratio="3/4" sizes="(max-width: 640px) 92vw, 400px" />
+                    <Img slug={entry.id} key={f.image} alt={`${d.title} · ${f.title}`} ratio="3/4" sizes="(max-width: 640px) 92vw, 400px" />
                   </div>
                 )}
                 <div class="feature-txt">

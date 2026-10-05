@@ -10,8 +10,8 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
 ---
 
 <BaseLayout
-  title="Résumé — Hana Awad"
-  description="Hana Awad — UX designer & ex-architect. Experience, education, and skills, with a downloadable ATS-friendly PDF."
+  title="Résumé · Hana Awad"
+  description="Hana Awad, UX designer & ex architect. Experience, education, and skills, with a downloadable ATS friendly PDF."
 >
   <div class="resume">
     <header class="head">
@@ -53,7 +53,7 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
                 <Icon name={s.icon} size={18} />
               </span>
               <p class="strength-text">
-                <strong>{s.label}</strong> — {s.body}
+                <strong>{s.label}</strong>. {s.body}
               </p>
             </li>
           ))
@@ -457,7 +457,7 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
 
 <!--
   Print / PDF theme. Compacts the on-screen résumé to a readable A4 document
-  (same dark design, timeline and chips — just sized for paper) and drops the
+  (same dark design, timeline and chips , just sized for paper) and drops the
   site chrome + download buttons. Used both by the browser's Print dialog and by
   the headless-Chromium PDF renderer (scripts/build-resume-pdf.mjs).
 -->
@@ -467,8 +467,8 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
       size: A4;
       /* full-bleed: margins must be 0 so the dark background reaches the paper
          edges (Chromium never paints the @page margin strips). Per-page top
-         breathing room is added as padding on the entries below, which — unlike
-         margins — is preserved when an entry starts at the top of a page. */
+         breathing room is added as padding on the entries below, which , unlike
+         margins , is preserved when an entry starts at the top of a page. */
       margin: 0;
     }
     html,
@@ -526,7 +526,7 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
       margin: 13px 0 0 !important;
     }
 
-    /* Section rhythm + headings — spacing as top padding (survives page tops,
+    /* Section rhythm + headings , spacing as top padding (survives page tops,
        unlike margins which Chromium truncates at a page break) so a section
        heading landing on a new page still gets breathing room. */
     .block {
@@ -566,7 +566,7 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
       line-height: 1.55 !important;
     }
 
-    /* Experience — spacing lives on each entry as padding-top (preserved when
+    /* Experience , spacing lives on each entry as padding-top (preserved when
        an entry starts a new page); the connector line is dropped for print. */
     .timeline {
       gap: 0 !important;

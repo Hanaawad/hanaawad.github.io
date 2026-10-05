@@ -17,7 +17,7 @@ const { slug, title, client, role, summary, glow, metric, metricLabel } = Astro.
 
 <a class="card reveal" href={`/work/${slug}`} style={`--glow:${glow};`}>
   <div class="card-media" transition:name={`cs-media-${slug}`}>
-    <Img slug={slug} key="hero" alt={`${title} — cover`} ratio="16/10" sizes="(max-width: 720px) 92vw, 520px" />
+    <Img slug={slug} key="hero" alt={`${title} cover`} ratio="16/10" sizes="(max-width: 720px) 92vw, 520px" />
   </div>
   <div class="card-body">
     <p class="card-meta">{client} · {role}</p>
