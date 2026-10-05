@@ -12,8 +12,8 @@ const loves = ['Painting', 'Fishing', 'Photography', 'Hiking', 'Cooking'];
 ---
 
 <BaseLayout
-  title="Hobbies — Hana Awad"
-  description="Beyond design — Hana Awad's animated art pieces, and the things she loves outside work."
+  title="Hobbies · Hana Awad"
+  description="Beyond design, Hana Awad's animated art pieces, and the things she loves outside work."
 >
   <div class="glow-field" aria-hidden="true"></div>
 
@@ -33,7 +33,7 @@ const loves = ['Painting', 'Fishing', 'Photography', 'Hiking', 'Cooking'];
         pieces.map((p) => (
           <figure class="piece reveal">
             <div class="piece-media">
-              <img src={p.src} alt={`${p.title} — ${p.tag}`} loading="lazy" decoding="async" />
+              <img src={p.src} alt={`${p.title} · ${p.tag}`} loading="lazy" decoding="async" />
             </div>
             <figcaption class="piece-cap">
               <span class="piece-title">{p.title}</span>

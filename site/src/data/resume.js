@@ -5,7 +5,7 @@
 
 export const resume = {
   name: 'Hana Awad',
-  title: 'User Experience Designer & ex-Architect',
+  title: 'User Experience Designer & ex Architect',
   location: 'Copenhagen, Denmark',
   email: 'hanaawad_92@hotmail.com',
   phone: '(+45) 93 83 90 46',
@@ -15,7 +15,7 @@ export const resume = {
   },
 
   summary:
-    'Passionate interface and UX designer with front-end development experience and an architect’s background. I take products from research and information architecture through to designed, shipped interfaces — and, because I also write front-end code, I design with the grain of what’s buildable. Ex-architect from Alexandria, Egypt, now based in Copenhagen.',
+    'Passionate interface and UX designer with front end development experience and an architect’s background. I take products from research and information architecture through to designed, shipped interfaces, and because I also write front end code, I design with the grain of what’s buildable. Ex architect from Alexandria, Egypt, now based in Copenhagen.',
 
   strengths: [
     {
@@ -53,13 +53,13 @@ export const resume = {
       end: 'Present',
       location: 'Copenhagen, Denmark',
       bullets: [
-        'Led the end-to-end UX for Lightboks, SOUNDBOKS’s first light and a new product category — from concept, research and the colour and control systems through to the shipped companion app, validated through internal, external and real-world party testing.',
-        'Translate insights and business requirements into product design concepts and intuitive end-to-end experiences.',
-        'Lead UX design strategy from start to finish — deep research, creative ideation, and tackling design-strategy and information-architecture challenges across the whole UX journey.',
-        'Develop user-centric brand experiences across online shops, digital products, and services; build customer journeys, sketches and wireframes.',
-        'Lead research projects and develop new app features through cross-team collaboration with stakeholders across departments.',
+        'Led the end to end UX for Lightboks, SOUNDBOKS’s first light and a new product category, from concept, research and the colour and control systems through to the shipped companion app, validated through internal, external and real world party testing.',
+        'Translate insights and business requirements into product design concepts and intuitive end to end experiences.',
+        'Lead UX design strategy from start to finish, with deep research, creative ideation, and tackling design strategy and information architecture challenges across the whole UX journey.',
+        'Develop user centric brand experiences across online shops, digital products, and services; build customer journeys, sketches and wireframes.',
+        'Lead research projects and develop new app features through cross team collaboration with stakeholders across departments.',
         'Build a Figma component library and design frameworks for website and mobile app, improving UI consistency and speed of delivery.',
-        'Work with scalable, responsive designs; collaborate with Product Owners and Engineers from conception to launch in an agile, weekly-sprint process.',
+        'Work with scalable, responsive designs; collaborate with Product Owners and Engineers from conception to launch in an agile, weekly sprint process.',
       ],
     },
     {
@@ -70,8 +70,8 @@ export const resume = {
       location: 'Egypt',
       bullets: [
         'Developed user personas and user journeys, and defined the product roadmap and KPIs to prioritise work.',
-        'Fast sketching and prototyping; designed website and mobile-app frameworks in Figma for back-end developers.',
-        'Implemented designs using the Angular framework, working weekly with back-end developers on the high-level experience and key interactions.',
+        'Fast sketching and prototyping; designed website and mobile app frameworks in Figma for back end developers.',
+        'Implemented designs using the Angular framework, working weekly with back end developers on the high level experience and key interactions.',
         'Worked with the marketing team to understand market traction and strengthen community building.',
       ],
     },
@@ -82,9 +82,9 @@ export const resume = {
       end: 'Aug 2020',
       location: 'Copenhagen, Denmark',
       bullets: [
-        'Weekly user testing plus desk and on-site research to understand user challenges and the market domain.',
+        'Weekly user testing plus desk and on site research to understand user challenges and the market domain.',
         'Developed personas and journeys; defined the product roadmap and KPIs.',
-        'Designed website and mobile-app frameworks in Figma and implemented designs using Angular, working daily with back-end developers.',
+        'Designed website and mobile app frameworks in Figma and implemented designs using Angular, working daily with back end developers.',
       ],
     },
     {
@@ -94,11 +94,11 @@ export const resume = {
       end: 'Sep 2019',
       location: 'Copenhagen, Denmark',
       bullets: [
-        'Redesigned proposals for Valuer’s website; produced e-book and thumbnail designs.',
+        'Redesigned proposals for Valuer’s website; produced ebook and thumbnail designs.',
       ],
     },
     {
-      role: 'Full-Stack & Web Developer Intern',
+      role: 'Full Stack & Web Developer Intern',
       org: 'Bomae',
       start: 'Mar 2019',
       end: 'Sep 2019',
@@ -115,7 +115,7 @@ export const resume = {
       end: 'Sep 2018',
       location: 'Egypt · Zurich · Copenhagen',
       bullets: [
-        'Delivered residential apartment, villa and office projects — client consultation, schematic design, 3D visualisation, detailed drawings and final delivery.',
+        'Delivered residential apartment, villa and office projects, including client consultation, schematic design, 3D visualisation, detailed drawings and final delivery.',
       ],
     },
     {
@@ -125,7 +125,7 @@ export const resume = {
       end: 'Sep 2018',
       location: 'Alexandria, Egypt',
       bullets: [
-        'Organised and developed teaching material for university lectures; reviewed material with students in group and one-to-one sessions.',
+        'Organised and developed teaching material for university lectures; reviewed material with students in group and one to one sessions.',
         'Assisted in preparing examinations and grading student progress and projects.',
       ],
     },
@@ -138,7 +138,7 @@ export const resume = {
       start: 'Sep 2017',
       end: 'Aug 2019',
       location: 'Alexandria, Egypt',
-      note: 'Graduated with honours. Thesis: a sustainable-design approach studying natural ventilation in educational buildings.',
+      note: 'Graduated with honours. Thesis: a sustainable design approach studying natural ventilation in educational buildings.',
     },
     {
       title: 'BSc, Architectural Engineering & Environmental Design',
@@ -148,7 +148,7 @@ export const resume = {
       location: 'Alexandria, Egypt',
     },
     {
-      title: 'Front-End Web Development Nanodegree',
+      title: 'Front End Web Development Nanodegree',
       org: 'Udacity',
       date: 'Jan 2020',
       location: 'Online',
@@ -158,7 +158,7 @@ export const resume = {
       org: 'Le Wagon',
       date: 'Jan 2019',
       location: 'Copenhagen, Denmark',
-      note: '9-week full-stack bootcamp: Ruby, Ruby on Rails, JavaScript, HTML & CSS, APIs, GitHub, Heroku — plus an introduction to UX design and Figma.',
+      note: '9 week full stack bootcamp: Ruby, Ruby on Rails, JavaScript, HTML & CSS, APIs, GitHub, Heroku, plus an introduction to UX design and Figma.',
     },
     {
       title: 'Parametric Design Course',
@@ -202,7 +202,7 @@ export const resume = {
       'Illustrator',
       'InDesign',
     ],
-    'Front-end & software': [
+    'Front end & software': [
       'HTML',
       'CSS',
       'JavaScript',
@@ -218,7 +218,7 @@ export const resume = {
     ],
     Architecture: [
       'Autodesk Revit 2D/3D',
-      'Autodesk 3D-MAX',
+      'Autodesk 3D MAX',
       'SketchUp',
       'AutoCAD',
       '3D visualisation & rendering',
@@ -234,7 +234,7 @@ export const resume = {
       'Agile / Scrum',
       'Information architecture',
       'Customer journeys',
-      'Cross-team collaboration',
+      'Cross team collaboration',
     ],
   },
 
