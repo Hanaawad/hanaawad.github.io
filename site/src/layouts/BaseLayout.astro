@@ -52,7 +52,7 @@ const ogUrl = new URL(ogImage, Astro.site).href;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogUrl} />
 
-    <meta name="theme-color" content="#0e0e10" />
+    <meta name="theme-color" content="#f5f2ea" />
     <ClientRouter />
     <!-- Enable reveal animations only when motion is allowed (runs before paint). -->
     <script is:inline>
@@ -67,11 +67,22 @@ const ogUrl = new URL(ogImage, Astro.site).href;
   </head>
   <body style={glow ? `--glow: ${glow}; --accent: ${glow};` : undefined}>
     <a class="skip-link" href="#content">Skip to content</a>
-    {chrome && <Nav />}
-    <main id="content" tabindex="-1">
-      <slot />
-    </main>
-    {chrome && <Footer />}
+    <div class="sheet">
+      {
+        chrome && (
+          <div class="margin-rule" aria-hidden="true">
+            <span>Hana Awad — Portfolio</span>
+            <span class="cols"><span>A</span><span>B</span><span>C</span><span>D</span></span>
+            <span>Copenhagen · 55.6°N</span>
+          </div>
+        )
+      }
+      {chrome && <Nav />}
+      <main id="content" tabindex="-1">
+        <slot />
+      </main>
+      {chrome && <Footer />}
+    </div>
 
     <script>
       // Scroll-reveal: fade + translate `.reveal` elements in, with a light

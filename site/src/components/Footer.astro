@@ -70,13 +70,17 @@ const explore = [
     </nav>
   </div>
 
-  <p class="foot-fine">© {new Date().getFullYear()} Hana Awad · Designed &amp; built in Copenhagen</p>
+  <div class="foot-fine">
+    <span>© {new Date().getFullYear()} Hana Awad</span>
+    <span>Designed &amp; built in Copenhagen</span>
+    <span>Rev. {new Date().getFullYear()}</span>
+  </div>
 </footer>
 
 <style>
   .foot {
-    border-top: 1px solid var(--hairline);
-    background: var(--bg);
+    border-top: 1px solid var(--rule);
+    background: transparent;
   }
   .foot-inner {
     max-width: 1080px;
@@ -109,11 +113,10 @@ const explore = [
     margin: 0 0 18px;
   }
   .status-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 0;
     background: var(--accent);
-    box-shadow: 0 0 9px 1px var(--accent);
     flex: none;
   }
   .foot-contact {
@@ -149,11 +152,12 @@ const explore = [
     gap: 32px;
   }
   .foot-h {
-    font-size: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.14em;
     color: var(--text-muted);
-    font-weight: 600;
+    font-weight: 500;
     margin: 0 0 16px;
   }
   .foot-group ul {
@@ -178,9 +182,16 @@ const explore = [
   .foot-fine {
     max-width: 1080px;
     margin: 0 auto;
-    padding: 20px clamp(16px, 5vw, 40px) 44px;
-    border-top: 1px solid var(--hairline);
-    font-size: 12.5px;
+    padding: 14px clamp(16px, 5vw, 40px) 40px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: var(--text-muted);
   }
 

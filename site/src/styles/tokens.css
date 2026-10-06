@@ -1,42 +1,49 @@
 /* ============================================================
-   V4 — Sleek Dark / Premium — design tokens
-   Dark-first. Light mode is intentionally deferred (not built).
+   V5 — Technical Drawing / Architect's Sheet — design tokens
+   Light "drafting paper" theme. Ink on warm paper, one flat
+   terracotta accent, a structural grid, monospace drafting labels.
    ============================================================ */
 
 @import '@fontsource-variable/fraunces';
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
 
 :root {
-  /* Surfaces */
-  --bg: #0e0e10;
-  --panel: #16161a;
-  --panel-2: #1a1a1f;
-  --hairline: #1f1f25;
-  --hairline-strong: #24242a;
+  /* Surfaces — warm drafting paper */
+  --bg: #f5f2ea;
+  --panel: #efe9dd;
+  --panel-2: #e8e1d2;
+  --hairline: #ded7c7;
+  --hairline-strong: #c8c0ad;
 
-  /* Text */
-  --text: #f4f4f5;
-  --text-secondary: #a1a1aa;
-  /* muted bumped from #71717a → #8a8a93 to pass WCAG AA (4.5:1) on bg/panel */
-  --text-muted: #8a8a93;
+  /* Structural grid + ink rules */
+  --grid-line: #e6dfcf;
+  --rule: #1a1a17;
 
-  /* Accents */
-  --accent: #e0794a;          /* primary / Soundboks */
-  --accent-soundboks: #e0794a;
-  --accent-email: #8b7ff0;
-  --accent-ovni: #e0b84a;
+  /* Ink */
+  --text: #1a1a17;
+  --text-secondary: #55524a;
+  --text-muted: #817c6d;
 
-  /* Per-page glow — overridden per case study via inline style */
+  /* Accents — flat, no glow */
+  --accent: #c2572c;          /* terracotta / primary */
+  --accent-soundboks: #c2572c;
+  --accent-email: #6d5fd6;
+  --accent-ovni: #b4852a;
+
+  /* Per-page accent — overridden per case study via inline style */
   --glow: var(--accent);
 
   /* Type */
   --font-serif: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
-  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Space Grotesk Variable', 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
-  /* Radii + shadow */
-  --radius: 14px;
-  --radius-sm: 8px;
-  --radius-lg: 20px;
+  /* Radii — sharp, technical */
+  --radius: 2px;
+  --radius-sm: 0px;
+  --radius-lg: 3px;
 
   /* Motion */
   --ease-out: cubic-bezier(0.16, 0.84, 0.3, 1);
@@ -72,7 +79,7 @@ body {
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-weight: 500;
   line-height: 1.1;
   margin: 0;
@@ -90,7 +97,7 @@ img {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--accent) 35%, transparent);
+  background: color-mix(in srgb, var(--accent) 24%, transparent);
   color: var(--text);
 }
 
@@ -98,7 +105,71 @@ img {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 3px;
+  border-radius: 1px;
+}
+
+/* ============================================================
+   Sheet — the framed drawing surface every page sits on.
+   Centered, side rules, faint structural grid showing through.
+   ============================================================ */
+.sheet {
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+  min-height: 100vh;
+  border-left: 1px solid var(--hairline-strong);
+  border-right: 1px solid var(--hairline-strong);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 100% 72px, 72px 100%;
+  background-position: 0 0;
+}
+
+/* Running header — architectural margin rule above the nav */
+.margin-rule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px clamp(16px, 5vw, 40px);
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.margin-rule .cols {
+  display: flex;
+  gap: 0;
+}
+.margin-rule .cols span {
+  width: 58px;
+  text-align: center;
+}
+@media (max-width: 700px) {
+  .margin-rule .cols {
+    display: none;
+  }
+}
+
+/* Mono "drafting" label — shared eyebrow/section-label pattern */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.mark {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  flex: none;
 }
 
 /* Skip-to-content link — visible only on keyboard focus */
@@ -110,7 +181,7 @@ img {
   padding: 10px 16px;
   border-radius: var(--radius-sm);
   background: var(--accent);
-  color: #16130f;
+  color: #f5f2ea;
   font-size: 14px;
   font-weight: 600;
   transition: top 0.15s var(--ease-out);
@@ -123,10 +194,7 @@ img {
 }
 
 /* ============================================================
-   Motion layer (Phase 3)
-   Progressive enhancement: reveal styles only apply once JS has
-   added `.reveal-ready` to <html>, AND only when motion is allowed.
-   With no JS or prefers-reduced-motion, `.reveal` stays fully visible.
+   Motion layer
    ============================================================ */
 .reveal-ready .reveal {
   opacity: 0;
@@ -170,7 +238,6 @@ img {
   .link-underline::after {
     transition: none;
   }
-  /* Neutralise any view-transition animation */
   ::view-transition-group(*),
   ::view-transition-old(*),
   ::view-transition-new(*) {
@@ -178,15 +245,14 @@ img {
   }
 }
 
-/* Gradient headline utility */
+/* Headline utility — kept as a solid-ink fallback (no gradient in V5) */
 .headline-gradient {
-  background: linear-gradient(
-    100deg,
-    var(--text) 0%,
-    var(--text) 45%,
-    var(--accent) 130%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--text);
+}
+/* Serif italic accent words inside display headings */
+.ital {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
 }

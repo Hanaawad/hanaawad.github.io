@@ -60,33 +60,35 @@ const leading = [
   title="About · Hana Awad"
   description="Hana Awad, UX designer with front end experience and an architect's background, based in Copenhagen."
 >
-  <div class="glow-field" aria-hidden="true"></div>
-
   <div class="about">
-    <div class="about-head">
-      <div class="avatar">
-        <Image src={portrait} alt="Hana Awad" width={240} height={240} />
+    <div class="hero">
+      <div class="plate">
+        <Image src={portrait} alt="Hana Awad" width={300} height={360} />
+        <div class="plate-cap">
+          <span>Fig. 01</span>
+          <span>Hana Awad</span>
+        </div>
       </div>
-      <div class="about-head-text">
-        <p class="eyebrow">About</p>
-        <h1 class="title">
-          <span class="headline-gradient">From buildings to interfaces.</span>
-        </h1>
+      <div class="hero-text">
+        <p class="kicker"><span class="mark" aria-hidden="true"></span>About</p>
+        <h1 class="title">From <span class="ital">buildings</span> to interfaces.</h1>
+        <div class="prose">
+          <p>
+            I'm Hana Awad, a passionate interface and UX designer with front end developer
+            experience, and an ex architect from Alexandria, Egypt, now living in Copenhagen,
+            Denmark.
+          </p>
+          <p>
+            Architecture taught me to think in structure and flow: how people move through a
+            space, what they see first, and how everything fits together. I bring that same
+            instinct to digital products, starting from research and information architecture,
+            and carrying it through to interfaces that are clear, usable, and shipped.
+          </p>
+        </div>
       </div>
     </div>
 
-    <div class="prose">
-      <p>
-        I'm Hana Awad, a passionate interface and UX designer with front end developer
-        experience, and an ex architect from Alexandria, Egypt, now living in Copenhagen,
-        Denmark.
-      </p>
-      <p>
-        Architecture taught me to think in structure and flow: how people move through a
-        space, what they see first, and how everything fits together. I bring that same
-        instinct to digital products, starting from research and information architecture,
-        and carrying it through to interfaces that are clear, usable, and shipped.
-      </p>
+    <div class="prose wide">
       <p>
         As a <strong>Senior UX Design Lead</strong>, my work goes beyond screens: I set the UX
         direction for a product, mentor the designers on my team, and shape the quarterly roadmap,
@@ -99,11 +101,12 @@ const leading = [
     </div>
 
     <section class="leading">
-      <h2 class="section-h">As a design lead</h2>
+      <div class="seclabel"><span class="idx">01</span><h2>As a design lead</h2></div>
       <div class="lead-grid">
         {
-          leading.map((l) => (
+          leading.map((l, i) => (
             <div class="lead-item">
+              <span class="lead-n">{String(i + 1).padStart(2, '0')}</span>
               <h3 class="lead-title">{l.title}</h3>
               <p class="lead-body">{l.body}</p>
             </div>
@@ -113,7 +116,7 @@ const leading = [
     </section>
 
     <section class="skills">
-      <h2 class="section-h">What I do</h2>
+      <div class="seclabel"><span class="idx">02</span><h2>What I do</h2></div>
       <div class="chips">
         {skills.map((s) => <span class="chip">{s}</span>)}
       </div>
@@ -122,71 +125,96 @@ const leading = [
 </BaseLayout>
 
 <style>
-  .glow-field {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(
-      620px 420px at 80% 0%,
-      color-mix(in srgb, var(--accent) 13%, transparent),
-      transparent 70%
-    );
-  }
   .about {
-    max-width: 760px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: clamp(56px, 10vw, 110px) clamp(16px, 5vw, 40px) 80px;
+    padding: clamp(48px, 9vw, 96px) clamp(16px, 5vw, 40px) 80px;
   }
-  .about-head {
-    display: flex;
-    align-items: center;
-    gap: clamp(20px, 4vw, 34px);
-    margin: 0 0 32px;
+
+  /* Hero: plate + text */
+  .hero {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: clamp(28px, 5vw, 52px);
+    align-items: start;
   }
-  .about-head-text {
-    min-width: 0;
-  }
-  .avatar {
-    width: clamp(104px, 18vw, 148px);
-    height: clamp(104px, 18vw, 148px);
-    border-radius: 50%;
-    overflow: hidden;
-    flex: none;
-    border: 1px solid var(--hairline-strong);
+  .plate {
+    border: 1px solid var(--rule);
+    padding: 9px;
     background: var(--panel);
   }
-  .avatar :global(img) {
+  .plate :global(img) {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     display: block;
+    filter: grayscale(1) contrast(1.02);
   }
-  .eyebrow {
-    font-size: 13px;
+  .plate-cap {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--text-muted);
-    margin: 0 0 14px;
+    color: var(--text-secondary);
+    padding: 10px 2px 2px;
+  }
+  .kicker {
+    display: flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin: 0 0 20px;
   }
   .title {
-    font-size: clamp(40px, 8vw, 68px);
-    letter-spacing: -0.02em;
-    margin: 0;
+    font-size: clamp(34px, 6vw, 58px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.0;
+    margin: 0 0 24px;
   }
   .prose p {
-    font-size: clamp(17px, 2.6vw, 20px);
+    font-size: clamp(16px, 2.4vw, 18px);
     line-height: 1.7;
     color: var(--text-secondary);
     max-width: 64ch;
-    margin: 0 0 20px;
+    margin: 0 0 18px;
   }
-  .prose p:first-child {
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
+  .prose.wide {
+    margin-top: 44px;
+  }
+  .prose strong {
     color: var(--text);
-    font-family: var(--font-serif);
-    font-size: clamp(20px, 3vw, 26px);
-    line-height: 1.5;
+    font-weight: 600;
   }
+
+  .seclabel {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    border-top: 1px solid var(--rule);
+    padding: 16px 0 22px;
+  }
+  .seclabel .idx {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 13px;
+  }
+  .seclabel h2 {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
   .leading {
     margin-top: 56px;
   }
@@ -197,13 +225,18 @@ const leading = [
   }
   .lead-item {
     padding: 20px;
-    border: 1px solid var(--hairline);
-    border-radius: var(--radius);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-sm);
     background: var(--panel);
+  }
+  .lead-n {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
   }
   .lead-title {
     font-size: 16px;
-    margin: 0 0 8px;
+    margin: 8px 0 8px;
     font-family: var(--font-serif);
   }
   .lead-body {
@@ -212,17 +245,9 @@ const leading = [
     color: var(--text-secondary);
     margin: 0;
   }
+
   .skills {
     margin-top: 56px;
-    padding-top: 8px;
-  }
-  .section-h {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--text-muted);
-    font-weight: 600;
-    margin: 0 0 18px;
   }
   .chips {
     display: flex;
@@ -230,25 +255,25 @@ const leading = [
     gap: 9px;
   }
   .chip {
-    font-size: 14px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
     color: var(--text-secondary);
-    padding: 8px 14px;
-    border-radius: 999px;
+    padding: 7px 13px;
+    border-radius: var(--radius-sm);
     border: 1px solid var(--hairline-strong);
     background: var(--panel);
   }
-  @media (max-width: 560px) {
+
+  @media (max-width: 680px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .plate {
+      max-width: 220px;
+    }
     .lead-grid {
       grid-template-columns: 1fr;
-    }
-    .about-head {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 20px;
-    }
-    .avatar {
-      width: 96px;
-      height: 96px;
     }
   }
 </style>
