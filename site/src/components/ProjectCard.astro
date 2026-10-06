@@ -11,13 +11,15 @@ export interface Props {
   glow: string;
   metric?: string;
   metricLabel?: string;
+  fig?: string;
 }
-const { slug, title, client, role, summary, glow, metric, metricLabel } = Astro.props;
+const { slug, title, client, role, summary, glow, metric, metricLabel, fig } = Astro.props;
 ---
 
 <a class="card reveal" href={`/work/${slug}`} style={`--glow:${glow};`}>
   <div class="card-media" transition:name={`cs-media-${slug}`}>
     <Img slug={slug} key="hero" alt={`${title} cover`} ratio="16/10" sizes="(max-width: 720px) 92vw, 520px" />
+    {fig && <span class="card-fig">{fig}</span>}
   </div>
   <div class="card-body">
     <p class="card-meta">{client} · {role}</p>
@@ -42,36 +44,20 @@ const { slug, title, client, role, summary, glow, metric, metricLabel } = Astro.
     position: relative;
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--hairline);
-    border-radius: var(--radius-lg);
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-sm);
     background: var(--panel);
     overflow: hidden;
-    transition: transform 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s var(--ease-out);
-    background: radial-gradient(
-      420px 240px at 30% 0%,
-      color-mix(in srgb, var(--glow) 20%, transparent),
-      transparent 60%
-    );
+    transition: border-color 0.2s var(--ease-out);
   }
   .card:hover {
-    transform: translateY(-4px);
-    border-color: color-mix(in srgb, var(--glow) 45%, var(--hairline-strong));
-  }
-  .card:hover::before {
-    opacity: 1;
+    border-color: var(--rule);
   }
   .card-media {
+    position: relative;
     aspect-ratio: 16 / 10;
     overflow: hidden;
-    border-bottom: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline-strong);
     background: var(--panel-2);
   }
   .card-media :global(img) {
@@ -79,27 +65,46 @@ const { slug, title, client, role, summary, glow, metric, metricLabel } = Astro.
     height: 100%;
     object-fit: cover;
     border-radius: 0;
+    transition: transform 0.4s var(--ease-out);
+  }
+  .card:hover .card-media :global(img) {
+    transform: scale(1.02);
+  }
+  .card-fig {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    border: 1px solid var(--hairline-strong);
+    padding: 3px 8px;
   }
   .card-body {
     padding: 18px 20px 22px;
     position: relative;
   }
   .card-meta {
-    font-size: 12.5px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: var(--text-muted);
-    margin: 0 0 8px;
-    letter-spacing: 0.02em;
+    margin: 0 0 10px;
   }
   .card-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    font-size: clamp(22px, 3.6vw, 28px);
+    font-family: var(--font-serif);
+    font-size: clamp(24px, 3.6vw, 30px);
     margin: 0 0 10px;
   }
   .card-title :global(.card-arrow) {
-    color: var(--glow);
+    color: var(--accent);
     flex: none;
     transition: transform 0.25s var(--ease-out);
   }
@@ -121,12 +126,13 @@ const { slug, title, client, role, summary, glow, metric, metricLabel } = Astro.
   .card-metric-num {
     font-family: var(--font-serif);
     font-size: 22px;
-    color: var(--glow);
+    color: var(--accent);
   }
   .card-metric-lbl {
-    font-size: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     color: var(--text-muted);
   }
 </style>

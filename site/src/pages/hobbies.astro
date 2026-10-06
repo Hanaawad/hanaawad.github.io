@@ -15,25 +15,23 @@ const loves = ['Painting', 'Fishing', 'Photography', 'Hiking', 'Cooking'];
   title="Hobbies · Hana Awad"
   description="Beyond design, Hana Awad's animated art pieces, and the things she loves outside work."
 >
-  <div class="glow-field" aria-hidden="true"></div>
-
   <div class="hobbies">
     <header class="head">
-      <p class="eyebrow">Hobbies</p>
-      <h1 class="title">
-        <span class="headline-gradient">I love to paint, fish, take pictures, hike &amp; sometimes cook.</span>
-      </h1>
+      <p class="kicker"><span class="mark" aria-hidden="true"></span>Hobbies</p>
+      <h1 class="title">I love to paint, fish, take pictures, hike <span class="ital">and</span> sometimes cook.</h1>
       <div class="loves">
         {loves.map((l) => <span class="chip">{l}</span>)}
       </div>
     </header>
 
+    <div class="seclabel"><span class="idx">01</span><h2>Selected pieces</h2></div>
     <section class="gallery">
       {
-        pieces.map((p) => (
+        pieces.map((p, i) => (
           <figure class="piece reveal">
             <div class="piece-media">
               <img src={p.src} alt={`${p.title} · ${p.tag}`} loading="lazy" decoding="async" />
+              <span class="piece-fig">{`P·${String(i + 1).padStart(2, '0')}`}</span>
             </div>
             <figcaption class="piece-cap">
               <span class="piece-title">{p.title}</span>
@@ -47,32 +45,26 @@ const loves = ['Painting', 'Fishing', 'Photography', 'Hiking', 'Cooking'];
 </BaseLayout>
 
 <style>
-  .glow-field {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(
-      620px 420px at 80% 0%,
-      color-mix(in srgb, var(--accent) 13%, transparent),
-      transparent 70%
-    );
-  }
   .hobbies {
     max-width: 1080px;
     margin: 0 auto;
     padding: clamp(48px, 8vw, 96px) clamp(16px, 5vw, 40px) 90px;
   }
-  .eyebrow {
-    font-size: 13px;
+  .kicker {
+    display: flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--text-muted);
-    margin: 0 0 16px;
+    color: var(--text-secondary);
+    margin: 0 0 20px;
   }
   .title {
     font-size: clamp(30px, 5.5vw, 52px);
+    font-weight: 500;
     letter-spacing: -0.02em;
+    line-height: 1.02;
     max-width: 20ch;
     margin: 0 0 24px;
   }
@@ -82,36 +74,72 @@ const loves = ['Painting', 'Fishing', 'Photography', 'Hiking', 'Cooking'];
     gap: 9px;
   }
   .chip {
-    font-size: 14px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
     color: var(--text-secondary);
-    padding: 8px 14px;
-    border-radius: 999px;
+    padding: 7px 13px;
+    border-radius: var(--radius-sm);
     border: 1px solid var(--hairline-strong);
     background: var(--panel);
   }
 
-  .gallery {
+  .seclabel {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    border-top: 1px solid var(--rule);
+    padding: 16px 0 20px;
     margin-top: 48px;
+  }
+  .seclabel .idx {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-size: 13px;
+  }
+  .seclabel h2 {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .gallery {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
   .piece {
-    border: 1px solid var(--hairline);
-    border-radius: 6px;
+    border: 1px solid var(--hairline-strong);
+    border-radius: var(--radius-sm);
     background: var(--panel);
     overflow: hidden;
   }
   .piece-media {
+    position: relative;
     aspect-ratio: 3 / 4;
     overflow: hidden;
     background: var(--panel-2);
+    border-bottom: 1px solid var(--hairline-strong);
   }
   .piece-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+  .piece-fig {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    border: 1px solid var(--hairline-strong);
+    padding: 3px 8px;
   }
   .piece-cap {
     display: flex;
@@ -125,7 +153,8 @@ const loves = ['Painting', 'Fishing', 'Photography', 'Hiking', 'Cooking'];
     font-size: 18px;
   }
   .piece-tag {
-    font-size: 12.5px;
+    font-family: var(--font-mono);
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--text-muted);
