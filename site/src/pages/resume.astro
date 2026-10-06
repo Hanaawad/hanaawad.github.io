@@ -260,40 +260,41 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
     gap: 8px;
     padding: 10px 16px;
     border-radius: var(--radius-sm);
-    border: 1px solid var(--rule);
-    background: transparent;
-    color: var(--text);
+    border: 1px solid var(--accent-soft);
+    background: var(--accent-soft);
+    color: #1b1b1f;
     font-family: var(--font-mono);
     font-size: 12px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     white-space: nowrap;
-    transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out);
+    transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
   }
   .download :global(.dl-arrow) {
     transform: rotate(90deg);
-    color: var(--accent);
+    color: #1b1b1f;
     transition: color 0.2s var(--ease-out);
   }
   .download:hover {
     background: var(--rule);
+    border-color: var(--rule);
     color: var(--bg);
   }
   .download:hover :global(.dl-arrow) {
     color: var(--bg);
   }
   .download.solid {
-    background: var(--accent);
-    color: #f5f2ea;
-    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: #1b1b1f;
+    border-color: var(--accent-soft);
   }
   .download.solid :global(.dl-arrow) {
-    color: #f5f2ea;
+    color: #1b1b1f;
   }
   .download.solid:hover {
     background: var(--rule);
     border-color: var(--rule);
-    color: #f5f2ea;
+    color: var(--bg);
   }
 
   .summary {
@@ -338,9 +339,9 @@ const dateRange = (e: { date?: string; start?: string; end?: string }) =>
     width: 34px;
     height: 34px;
     border-radius: var(--radius-sm);
-    border: 1px solid var(--hairline-strong);
-    background: var(--panel);
-    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent-soft) 70%, var(--hairline-strong));
+    background: color-mix(in srgb, var(--accent-soft) 40%, var(--panel));
+    color: #b84a5c;
     flex: none;
     margin-top: 1px;
   }

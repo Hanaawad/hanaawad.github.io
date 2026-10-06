@@ -97,19 +97,20 @@ const links = [
     margin-left: 6px;
     padding: 9px 15px;
     border-radius: var(--radius-sm);
-    border: 1px solid var(--rule);
-    background: transparent;
-    color: var(--text);
+    border: 1px solid var(--accent-soft);
+    background: var(--accent-soft);
+    color: #1b1b1f;
     white-space: nowrap;
-    transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out);
+    transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
   }
   .cv :global(.dl-arrow) {
     transform: rotate(90deg);
-    color: var(--accent);
+    color: #1b1b1f;
     transition: color 0.2s var(--ease-out);
   }
   .cv:hover {
     background: var(--rule);
+    border-color: var(--rule);
     color: var(--bg);
   }
   .cv:hover :global(.dl-arrow) {
@@ -191,12 +192,12 @@ const links = [
     align-items: center;
     gap: 8px;
     margin-top: 4px;
-    color: var(--text);
-    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    color: #1b1b1f;
+    background: var(--accent-soft);
   }
   .cv-item :global(.dl-arrow) {
     transform: rotate(90deg);
-    color: var(--accent);
+    color: #1b1b1f;
   }
 
   @media (max-width: 620px) {

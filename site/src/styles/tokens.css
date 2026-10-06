@@ -27,8 +27,9 @@
   --text-muted: #7c7c85;
 
   /* Accents — flat, no glow */
-  --accent: #ec2f6e;          /* pink / primary (candidate — confirm vs day21.dk) */
-  --accent-soundboks: #ec2f6e;
+  --accent-soft: #ffc0c0;     /* day21 blush — solid fills + tints */
+  --accent: #d9606f;          /* readable companion rose — text, marks, thin rules */
+  --accent-soundboks: #d9606f;
   --accent-email: #6d5fd6;
   --accent-ovni: #b4852a;
 
