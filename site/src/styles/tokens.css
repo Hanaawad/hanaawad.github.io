@@ -10,25 +10,25 @@
 @import '@fontsource/ibm-plex-mono/500.css';
 
 :root {
-  /* Surfaces — warm drafting paper */
-  --bg: #f5f2ea;
-  --panel: #efe9dd;
-  --panel-2: #e8e1d2;
-  --hairline: #ded7c7;
-  --hairline-strong: #c8c0ad;
+  /* Surfaces — cool drafting grey */
+  --bg: #f0f0f1;
+  --panel: #e7e7ea;
+  --panel-2: #dedee2;
+  --hairline: #dadade;
+  --hairline-strong: #c3c3ca;
 
   /* Structural grid + ink rules */
-  --grid-line: #e6dfcf;
-  --rule: #1a1a17;
+  --grid-line: #e4e4e8;
+  --rule: #1b1b1f;
 
   /* Ink */
-  --text: #1a1a17;
-  --text-secondary: #55524a;
-  --text-muted: #817c6d;
+  --text: #1b1b1f;
+  --text-secondary: #54545c;
+  --text-muted: #7c7c85;
 
   /* Accents — flat, no glow */
-  --accent: #c2572c;          /* terracotta / primary */
-  --accent-soundboks: #c2572c;
+  --accent: #ec2f6e;          /* pink / primary (candidate — confirm vs day21.dk) */
+  --accent-soundboks: #ec2f6e;
   --accent-email: #6d5fd6;
   --accent-ovni: #b4852a;
 
